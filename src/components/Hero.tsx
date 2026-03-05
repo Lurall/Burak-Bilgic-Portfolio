@@ -97,7 +97,7 @@ export default function Hero() {
                     </ParticleBurst>
                     <ParticleBurst>
                         <motion.a
-                            href="/cv/Burak Bilgiç - Özgeçmiş CV.pdf"
+                            href={t.hero.cvLink}
                             download
                             className="px-7 md:px-9 py-3 md:py-3.5 rounded-full text-[0.85rem] md:text-[0.95rem] font-semibold cursor-pointer inline-flex items-center gap-2"
                             style={{

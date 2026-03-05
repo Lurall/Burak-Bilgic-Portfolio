@@ -15,6 +15,7 @@ export const dictionaries = {
             viewProjects: "Projelerimi Gör",
             contactMe: "İletişime Geç",
             downloadCv: "Özgeçmiş İndir",
+            cvLink: "/cv/Burak Bilgiç - Özgeçmiş CV.pdf",
             scrollDown: "Aşağı Kaydır",
         },
         about: {
@@ -95,6 +96,7 @@ export const dictionaries = {
             viewProjects: "View Projects",
             contactMe: "Contact Me",
             downloadCv: "Download CV",
+            cvLink: "/cv/Burak_Bilgic_CV_EN.pdf",
             scrollDown: "Scroll Down",
         },
         about: {
