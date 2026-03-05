@@ -23,7 +23,7 @@ export default function Hero() {
                 </p>
 
                 <h1
-                    className="font-[900] leading-[1.1] mb-6"
+                    className="font-[900] leading-[1.1] mb-3"
                     style={{
                         fontFamily: "var(--font-display)",
                         fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
@@ -31,13 +31,20 @@ export default function Hero() {
                         animation: "fadeInUp 1s ease-out 0.3s both",
                     }}
                 >
-                    <span className="block">SDET &</span>
-                    <span className="block">
-                        <span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>
-                            Geliştirici
-                        </span>
-                    </span>
+                    Burak Bilgiç
                 </h1>
+
+                <p
+                    className="text-[1.2rem] md:text-[1.6rem] font-bold uppercase tracking-[2px] md:tracking-[4px] mb-6"
+                    style={{
+                        fontFamily: "var(--font-display)",
+                        color: "var(--accent)",
+                        animation: "fadeInUp 1s ease-out 0.4s both",
+                        textShadow: "0 0 20px rgba(255, 215, 0, 0.3)",
+                    }}
+                >
+                    SDET & Geliştirici
+                </p>
 
                 <p
                     className="text-[1rem] md:text-[1.25rem] max-w-[550px] mx-auto mb-8 md:mb-10 font-light leading-[1.8] px-2"
@@ -46,7 +53,7 @@ export default function Hero() {
                         animation: "fadeInUp 1s ease-out 0.5s both",
                     }}
                 >
-                    Ben Burak, modern ve yaratıcı çözümler geliştiriyorum.
+                    Modern ve yaratıcı çözümler geliştiriyorum.
                     Her projede detaylara önem veriyorum.
                 </p>
 
