@@ -10,6 +10,7 @@ import { SiKick } from "react-icons/si";
 import ParticleBurst from "./ParticleBurst";
 import KeyboardSound from "./KeyboardSound";
 import emailjs from "@emailjs/browser";
+import { useLanguage } from "@/context/LanguageContext";
 
 const socials = [
     { icon: FaLinkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/burak-bilgiç-414b362b2/" },
@@ -21,16 +22,12 @@ const socials = [
     { icon: FaTwitch, label: "Twitch", href: "https://www.twitch.tv/lurallvlr" },
 ];
 
-// =============================================
-// EmailJS Ayarları - Aşağıdaki değerleri kendi
-// EmailJS hesabınızdan alıp buraya yapıştırın:
-// https://www.emailjs.com/
-// =============================================
 const EMAILJS_SERVICE_ID = "service_hlirj6k";   // EmailJS Service ID
 const EMAILJS_TEMPLATE_ID = "template_s8ip8hc"; // EmailJS Template ID
-const EMAILJS_PUBLIC_KEY = "ZsG8rneaSQJIfD6c8";    // EmailJS Public Key
+const EMAILJS_PUBLIC_KEY = "ZsG8rneaSQJIfD6c8"; // EmailJS Public Key
 
 export default function Footer() {
+    const { t } = useLanguage();
     const formRef = useRef<HTMLFormElement>(null);
     const [sending, setSending] = useState(false);
     const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
@@ -46,7 +43,7 @@ export default function Footer() {
         const message = formData.get("message") as string;
 
         if (!name.trim() || !email.trim() || !message.trim()) {
-            setToast({ type: "error", message: "Lütfen tüm alanları doldurun." });
+            setToast({ type: "error", message: t.contact.form.errorEmpty });
             setTimeout(() => setToast(null), 4000);
             return;
         }
@@ -60,10 +57,10 @@ export default function Footer() {
                 formRef.current,
                 EMAILJS_PUBLIC_KEY
             );
-            setToast({ type: "success", message: "Mesajınız başarıyla iletildi, en kısa sürede dönüş yapacağım! ✉️" });
+            setToast({ type: "success", message: t.contact.form.success });
             formRef.current.reset();
         } catch {
-            setToast({ type: "error", message: "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin." });
+            setToast({ type: "error", message: t.contact.form.errorSend });
         } finally {
             setSending(false);
             setTimeout(() => setToast(null), 5000);
@@ -107,10 +104,10 @@ export default function Footer() {
                         className="text-[1.8rem] md:text-[2.5rem] font-[800] mb-2 inline-block"
                         style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                     >
-                        İletişim<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
+                        {t.contact.title}<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
                     </h2>
                     <p className="text-[0.95rem] md:text-[1.1rem] font-light" style={{ color: "var(--text-dim)" }}>
-                        Bir projen mi var? Birlikte çalışmak ister misin? Bana ulaş!
+                        {t.contact.subtitle}
                     </p>
                 </div>
 
@@ -123,7 +120,7 @@ export default function Footer() {
                         transition={{ duration: 0.6 }}
                     >
                         <p className="text-[1.1rem] leading-[1.8] font-light mb-10" style={{ color: "var(--text-dim)" }}>
-                            Yeni projeler, yaratıcı fikirler veya fırsatlar hakkında konuşmak isterseniz benimle iletişime geçin. Her mesajı okuyorum ve en kısa sürede dönüş yapıyorum.
+                            {t.contact.infoText}
                         </p>
 
                         <div className="flex flex-col gap-6">
@@ -132,7 +129,7 @@ export default function Footer() {
                                     📧
                                 </div>
                                 <div>
-                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>Email</span>
+                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>{t.contact.labels.email}</span>
                                     <span className="block text-[1rem] font-medium" style={{ color: "var(--text)" }}>bbilgicc@gmail.com</span>
                                 </div>
                             </div>
@@ -142,8 +139,8 @@ export default function Footer() {
                                     📍
                                 </div>
                                 <div>
-                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>Konum</span>
-                                    <span className="block text-[1rem] font-medium" style={{ color: "var(--text)" }}>Fethiye, Muğla</span>
+                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>{t.contact.labels.location}</span>
+                                    <span className="block text-[1rem] font-medium" style={{ color: "var(--text)" }}>{t.contact.values.location}</span>
                                 </div>
                             </div>
 
@@ -152,8 +149,8 @@ export default function Footer() {
                                     💼
                                 </div>
                                 <div>
-                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>Durum</span>
-                                    <span className="block text-[1rem] font-medium" style={{ color: "var(--text)" }}>Freelance için müsait</span>
+                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>{t.contact.labels.status}</span>
+                                    <span className="block text-[1rem] font-medium" style={{ color: "var(--text)" }}>{t.contact.values.status}</span>
                                 </div>
                             </div>
                         </div>
@@ -168,16 +165,16 @@ export default function Footer() {
                     >
                         <form ref={formRef} onSubmit={handleSubmit} className="p-5 md:p-8 rounded-2xl" style={{ background: "rgba(255, 255, 255, 0.05)", backdropFilter: "blur(20px)", border: "1px solid var(--border)" }}>
                             <div className="mb-5">
-                                <label className="block text-[0.85rem] font-medium uppercase tracking-[1px] mb-2" style={{ color: "var(--text-dim)" }}>Adınız</label>
-                                <input name="user_name" type="text" placeholder="Adınızı girin" className="w-full px-[18px] py-[14px] rounded-xl text-[0.95rem] outline-none" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--text)", fontFamily: "var(--font-primary)", transition: "all 0.3s ease" }} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }} />
+                                <label className="block text-[0.85rem] font-medium uppercase tracking-[1px] mb-2" style={{ color: "var(--text-dim)" }}>{t.contact.form.name}</label>
+                                <input name="user_name" type="text" placeholder={t.contact.form.namePlaceholder} className="w-full px-[18px] py-[14px] rounded-xl text-[0.95rem] outline-none" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--text)", fontFamily: "var(--font-primary)", transition: "all 0.3s ease" }} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }} />
                             </div>
                             <div className="mb-5">
-                                <label className="block text-[0.85rem] font-medium uppercase tracking-[1px] mb-2" style={{ color: "var(--text-dim)" }}>E-posta</label>
-                                <input name="user_email" type="email" placeholder="E-posta adresiniz" className="w-full px-[18px] py-[14px] rounded-xl text-[0.95rem] outline-none" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--text)", fontFamily: "var(--font-primary)", transition: "all 0.3s ease" }} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }} />
+                                <label className="block text-[0.85rem] font-medium uppercase tracking-[1px] mb-2" style={{ color: "var(--text-dim)" }}>{t.contact.form.email}</label>
+                                <input name="user_email" type="email" placeholder={t.contact.form.emailPlaceholder} className="w-full px-[18px] py-[14px] rounded-xl text-[0.95rem] outline-none" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--text)", fontFamily: "var(--font-primary)", transition: "all 0.3s ease" }} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }} />
                             </div>
                             <div className="mb-6">
-                                <label className="block text-[0.85rem] font-medium uppercase tracking-[1px] mb-2" style={{ color: "var(--text-dim)" }}>Mesaj</label>
-                                <textarea name="message" rows={5} placeholder="Mesajınız..." className="w-full px-[18px] py-[14px] rounded-xl text-[0.95rem] outline-none resize-y" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--text)", fontFamily: "var(--font-primary)", minHeight: "120px", transition: "all 0.3s ease" }} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }} />
+                                <label className="block text-[0.85rem] font-medium uppercase tracking-[1px] mb-2" style={{ color: "var(--text-dim)" }}>{t.contact.form.message}</label>
+                                <textarea name="message" rows={5} placeholder={t.contact.form.messagePlaceholder} className="w-full px-[18px] py-[14px] rounded-xl text-[0.95rem] outline-none resize-y" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--text)", fontFamily: "var(--font-primary)", minHeight: "120px", transition: "all 0.3s ease" }} onFocus={(e) => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.boxShadow = "0 0 20px var(--accent-dim)"; }} onBlur={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.boxShadow = "none"; }} />
                             </div>
                             <ParticleBurst>
                                 <motion.button
@@ -202,10 +199,10 @@ export default function Footer() {
                                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                                                 className="inline-block w-5 h-5 border-2 border-[#1a1a2e] border-t-transparent rounded-full"
                                             />
-                                            Gönderiliyor...
+                                            {t.contact.form.sending}
                                         </span>
                                     ) : (
-                                        "Mesaj Gönder"
+                                        t.contact.form.submit
                                     )}
                                 </motion.button>
                             </ParticleBurst>
@@ -238,7 +235,7 @@ export default function Footer() {
 
                 <div className="text-center">
                     <p className="text-[0.9rem]" style={{ color: "var(--text-dim)" }}>
-                        © 2026 Burak Bilgiç. Tüm hakları saklıdır.
+                        {t.contact.copyright}
                     </p>
                 </div>
             </div>

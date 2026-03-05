@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Burak Bilgiç - SDET & Geliştirici. Test otomasyonu, yazılım geliştirme, AI sistemleri ve multimedya projelerim.",
 };
 
+import { LanguageProvider } from "@/context/LanguageContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body className="antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

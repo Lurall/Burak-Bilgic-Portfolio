@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import { FaDownload } from "react-icons/fa";
 import ParticleBurst from "./ParticleBurst";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+    const { t } = useLanguage();
+
     return (
         <section
             id="hero"
@@ -19,7 +22,7 @@ export default function Hero() {
                         animation: "fadeIn 0.8s ease-out 0.2s both",
                     }}
                 >
-                    Merhaba, ben
+                    {t.hero.greeting}
                 </p>
 
                 <h1
@@ -43,7 +46,7 @@ export default function Hero() {
                         textShadow: "0 0 20px rgba(255, 215, 0, 0.3)",
                     }}
                 >
-                    SDET & Geliştirici
+                    {t.hero.role}
                 </p>
 
                 <p
@@ -53,8 +56,7 @@ export default function Hero() {
                         animation: "fadeInUp 1s ease-out 0.5s both",
                     }}
                 >
-                    Modern ve yaratıcı çözümler geliştiriyorum.
-                    Her projede detaylara önem veriyorum.
+                    {t.hero.description}
                 </p>
 
                 <div
@@ -74,7 +76,7 @@ export default function Hero() {
                             whileHover={{ y: -2, boxShadow: "0 0 50px rgba(255,215,0,0.4), 0 8px 30px rgba(0,0,0,0.3)" }}
                             transition={{ duration: 0.3 }}
                         >
-                            Projelerimi Gör
+                            {t.hero.viewProjects}
                         </motion.a>
                     </ParticleBurst>
                     <ParticleBurst>
@@ -90,7 +92,7 @@ export default function Hero() {
                             whileHover={{ background: "var(--accent-dim)", y: -2, boxShadow: "0 0 30px var(--accent-dim)" }}
                             transition={{ duration: 0.3 }}
                         >
-                            İletişime Geç
+                            {t.hero.contactMe}
                         </motion.a>
                     </ParticleBurst>
                     <ParticleBurst>
@@ -108,7 +110,7 @@ export default function Hero() {
                             transition={{ duration: 0.3 }}
                         >
                             <FaDownload size={12} />
-                            Özgeçmiş İndir
+                            {t.hero.downloadCv}
                         </motion.a>
                     </ParticleBurst>
                 </div>
@@ -125,7 +127,7 @@ export default function Hero() {
                     animation: "float 2s ease-in-out infinite",
                 }}
             >
-                <span>Aşağı Kaydır</span>
+                <span>{t.hero.scrollDown}</span>
                 <div className="w-[1px] h-10" style={{ background: "linear-gradient(to bottom, var(--accent), transparent)" }} />
             </div>
         </section>

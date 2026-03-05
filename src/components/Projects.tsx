@@ -3,44 +3,47 @@
 import { motion } from "framer-motion";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import ParticleBurst from "./ParticleBurst";
-
-interface Project {
-    title: string;
-    emoji: string;
-    description: string;
-    tags: string[];
-    link?: string;
-}
-
-const projects: Project[] = [
-    {
-        title: "Video Verisi / LLM Entegrasyonu",
-        emoji: "🎬",
-        description: "Video verilerini LLM modelleri ile entegre eden, içerik analizi ve otomatik etiketleme yapan ileri düzey bir sistem.",
-        tags: ["Python", "LLM", "Video Processing", "AI"],
-    },
-    {
-        title: "yt-dlp Otomasyonu",
-        emoji: "⚡",
-        description: "yt-dlp aracını kullanarak video indirme süreçlerini otomatikleştiren kapsamlı bir otomasyon sistemi.",
-        tags: ["Python", "Automation", "CLI", "ffmpeg"],
-        link: "https://github.com/Lurall/Auto-Playlist-Downloader",
-    },
-    {
-        title: "Yerel AI Ses Modeli",
-        emoji: "🎙️",
-        description: "Yerel ortamda çalışan bir AI ses modeli. Ses sentezi ve tanıma işlemlerini gizlilik odaklı gerçekleştiren bir çözüm.",
-        tags: ["AI", "TTS", "Python", "Deep Learning"],
-    },
-    {
-        title: "SPL Donanım Optimizasyonu",
-        emoji: "🔊",
-        description: "SPL ses sistemleri için donanım optimizasyonu. Amplifikatör ayarları ve akustik ölçüm verilerine dayalı performans iyileştirmesi.",
-        tags: ["Audio Engineering", "Hardware", "DSP", "Optimization"],
-    },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Projects() {
+    const { t, language } = useLanguage();
+
+    const projects = [
+        {
+            title: language === "tr" ? "Video Verisi / LLM Entegrasyonu" : "Video Data / LLM Integration",
+            emoji: "🎬",
+            description: language === "tr"
+                ? "Video verilerini LLM modelleri ile entegre eden, içerik analizi ve otomatik etiketleme yapan ileri düzey bir sistem."
+                : "An advanced system that integrates video data with LLM models, performing content analysis and automatic tagging.",
+            tags: ["Python", "LLM", "Video Processing", "AI"],
+        },
+        {
+            title: language === "tr" ? "yt-dlp Otomasyonu" : "yt-dlp Automation",
+            emoji: "⚡",
+            description: language === "tr"
+                ? "yt-dlp aracını kullanarak video indirme süreçlerini otomatikleştiren kapsamlı bir otomasyon sistemi."
+                : "A comprehensive automation system that automates video downloading processes using the yt-dlp tool.",
+            tags: ["Python", "Automation", "CLI", "ffmpeg"],
+            link: "https://github.com/Lurall/Auto-Playlist-Downloader",
+        },
+        {
+            title: language === "tr" ? "Yerel AI Ses Modeli" : "Local AI Voice Model",
+            emoji: "🎙️",
+            description: language === "tr"
+                ? "Yerel ortamda çalışan bir AI ses modeli. Ses sentezi ve tanıma işlemlerini gizlilik odaklı gerçekleştiren bir çözüm."
+                : "An AI voice model running locally. A privacy-focused solution for voice synthesis and recognition operations.",
+            tags: ["AI", "TTS", "Python", "Deep Learning"],
+        },
+        {
+            title: language === "tr" ? "SPL Donanım Optimizasyonu" : "SPL Hardware Optimization",
+            emoji: "🔊",
+            description: language === "tr"
+                ? "SPL ses sistemleri için donanım optimizasyonu. Amplifikatör ayarları ve akustik ölçüm verilerine dayalı performans iyileştirmesi."
+                : "Hardware optimization for SPL audio systems. Performance improvements based on amplifier settings and acoustic measurement data.",
+            tags: ["Audio Engineering", "Hardware", "DSP", "Optimization"],
+        },
+    ];
+
     return (
         <section id="projects" className="py-16 md:py-24 px-4 md:px-6">
             <div className="max-w-[1200px] mx-auto">
@@ -49,10 +52,10 @@ export default function Projects() {
                         className="text-[1.8rem] md:text-[2.5rem] font-[800] mb-2 inline-block"
                         style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                     >
-                        Projeler<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
+                        {t.projects.title}<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
                     </h2>
                     <p className="text-[0.95rem] md:text-[1.1rem] font-light" style={{ color: "var(--text-dim)" }}>
-                        Üzerinde çalıştığım projeler
+                        {t.projects.subtitle}
                     </p>
                 </div>
 
@@ -81,7 +84,6 @@ export default function Projects() {
                                     }}
                                     transition={{ duration: 0.4 }}
                                 >
-                                    {/* Project image area */}
                                     <div
                                         className="w-full h-[150px] md:h-[200px] flex items-center justify-center text-4xl md:text-5xl relative overflow-hidden"
                                         style={{ background: "linear-gradient(135deg, rgba(30,40,80,0.6), rgba(60,80,140,0.4))" }}
@@ -138,7 +140,7 @@ export default function Projects() {
                                                     transition={{ duration: 0.3 }}
                                                 >
                                                     <FaExternalLinkAlt className="inline mr-2" size={10} />
-                                                    Detaylar
+                                                    {t.projects.viewProject}
                                                 </motion.a>
                                             ) : (
                                                 <motion.button
@@ -153,7 +155,7 @@ export default function Projects() {
                                                     transition={{ duration: 0.3 }}
                                                 >
                                                     <FaExternalLinkAlt className="inline mr-2" size={10} />
-                                                    Detaylar
+                                                    {t.projects.viewProject}
                                                 </motion.button>
                                             )}
                                         </div>

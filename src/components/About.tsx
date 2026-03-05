@@ -1,8 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function About() {
+    const { t } = useLanguage();
+
     return (
         <section id="about" className="py-16 md:py-24 px-4 md:px-6">
             <div className="max-w-[1000px] mx-auto text-center">
@@ -11,7 +14,7 @@ export default function About() {
                         className="text-[1.8rem] md:text-[2.5rem] font-[800] mb-2 inline-block"
                         style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                     >
-                        Hakkımda<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
+                        {t.about.title}<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
                     </h2>
                 </div>
 
@@ -29,21 +32,11 @@ export default function About() {
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6 }}
                 >
-                    <p className="mb-4">
-                        <strong style={{ color: "var(--text)" }}>Merhaba, ben Burak.</strong>
-                    </p>
-                    <p className="mb-4">
-                        <strong style={{ color: "var(--text)" }}>Java</strong> ve <strong style={{ color: "var(--text)" }}>Python</strong> dillerinde uygulamalı proje tecrübesine sahip <strong style={{ color: "var(--text)" }}>Yazılım Test Geliştirme (SDET)</strong> mühendisi. <strong style={{ color: "var(--text)" }}>Mersys LLC</strong>'deki 6 aylık stajımda "<strong style={{ color: "var(--text)" }}>CAMPUS</strong>" projesi için <strong style={{ color: "var(--text)" }}>Java</strong>, <strong style={{ color: "var(--text)" }}>Selenium WebDriver</strong> ve <strong style={{ color: "var(--text)" }}>Cucumber BDD</strong> kullanarak <strong style={{ color: "var(--text)" }}>uçtan uca test otomasyon süreçleri</strong> geliştirdim.
-                    </p>
-                    <p className="mb-4">
-                        Bireysel projelerimde <strong style={{ color: "var(--text)" }}>Python</strong>, <strong style={{ color: "var(--text)" }}>API entegrasyonları</strong> ve <strong style={{ color: "var(--text)" }}>yerel Büyük Dil Modelleri (LLM)</strong> kullanarak kişiselleştirilmiş <strong style={{ color: "var(--text)" }}>yapay zeka asistanları</strong> tasarlıyor ve <strong style={{ color: "var(--text)" }}>veri işleme süreçlerini otomatize</strong> ediyorum.
-                    </p>
-                    <p className="mb-4">
-                        <strong style={{ color: "var(--text)" }}>SDLC/STLC</strong> süreçlerine, <strong style={{ color: "var(--text)" }}>Jenkins</strong> ile <strong style={{ color: "var(--text)" }}>CI/CD</strong> entegrasyonlarına ve <strong style={{ color: "var(--text)" }}>sistem performans/donanım optimizasyonuna</strong> hakimim.
-                    </p>
-                    <p>
-                        Amacım, <strong style={{ color: "var(--text)" }}>test otomasyonu</strong> ve <strong style={{ color: "var(--text)" }}>AI mimarilerini</strong> birleştirerek <strong style={{ color: "var(--text)" }}>yazılım hata oranlarını minimize eden</strong> projelerde görev almak.
-                    </p>
+                    {t.about.paragraphs.map((p, i) => (
+                        <p key={i} className={i < t.about.paragraphs.length - 1 ? "mb-4" : ""}>
+                            {p}
+                        </p>
+                    ))}
                 </motion.div>
             </div>
         </section>

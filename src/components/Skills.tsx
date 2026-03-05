@@ -4,30 +4,40 @@ import { motion } from "framer-motion";
 import { FaBug, FaCode, FaRobot, FaPaintBrush } from "react-icons/fa";
 import ParticleBurst from "./ParticleBurst";
 
-const skills = [
-    {
-        category: "Test & QA",
-        icon: FaBug,
-        skills: ["Selenium", "Cypress", "JUnit", "TestNG", "API Testing", "CI/CD Pipeline", "Test Otomasyonu"],
-    },
-    {
-        category: "Programlama",
-        icon: FaCode,
-        skills: ["Java", "Python", "JavaScript/TypeScript", "Next.js", "React", "Node.js", "SQL"],
-    },
-    {
-        category: "Sistem & AI",
-        icon: FaRobot,
-        skills: ["LLM Entegrasyonu", "Ses Modelleri", "Docker", "Git", "Ağ Yönetimi"],
-    },
-    {
-        category: "Multimedya & Tasarım",
-        icon: FaPaintBrush,
-        skills: ["Video Düzenleme", "Ses Mühendisliği", "UI/UX Tasarım", "Figma", "SPL Optimizasyonu"],
-    },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Skills() {
+    const { t, language } = useLanguage();
+
+    const skills = [
+        {
+            category: t.skills.categories.testQa,
+            icon: FaBug,
+            skills: language === "tr"
+                ? ["Selenium", "Cypress", "JUnit", "TestNG", "API Testing", "CI/CD Pipeline", "Test Otomasyonu"]
+                : ["Selenium", "Cypress", "JUnit", "TestNG", "API Testing", "CI/CD Pipeline", "Test Automation"],
+        },
+        {
+            category: t.skills.categories.programming,
+            icon: FaCode,
+            skills: ["Java", "Python", "JavaScript/TypeScript", "Next.js", "React", "Node.js", "SQL"],
+        },
+        {
+            category: t.skills.categories.systemAi,
+            icon: FaRobot,
+            skills: language === "tr"
+                ? ["LLM Entegrasyonu", "Ses Modelleri", "Docker", "Git", "Ağ Yönetimi"]
+                : ["LLM Integration", "Voice Models", "Docker", "Git", "Network Management"],
+        },
+        {
+            category: t.skills.categories.multimediaDesign,
+            icon: FaPaintBrush,
+            skills: language === "tr"
+                ? ["Video Düzenleme", "Ses Mühendisliği", "UI/UX Tasarım", "Figma", "SPL Optimizasyonu"]
+                : ["Video Editing", "Sound Engineering", "UI/UX Design", "Figma", "SPL Optimization"],
+        },
+    ];
+
     return (
         <section id="skills" className="py-16 md:py-24 px-4 md:px-6">
             <div className="max-w-[1200px] mx-auto">
@@ -36,10 +46,10 @@ export default function Skills() {
                         className="text-[1.8rem] md:text-[2.5rem] font-[800] mb-2 inline-block"
                         style={{ fontFamily: "var(--font-display)", color: "var(--text)" }}
                     >
-                        Yetenekler<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
+                        {t.skills.title}<span style={{ color: "var(--accent)", animation: "glowPulse 3s ease-in-out infinite" }}>.</span>
                     </h2>
                     <p className="text-[0.95rem] md:text-[1.1rem] font-light" style={{ color: "var(--text-dim)" }}>
-                        Kullandığım teknolojiler ve araçlar
+                        {t.skills.subtitle}
                     </p>
                 </div>
 
