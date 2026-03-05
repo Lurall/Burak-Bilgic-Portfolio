@@ -18,7 +18,7 @@ const skills = [
     {
         category: "Sistem & AI",
         icon: FaRobot,
-        skills: ["LLM Entegrasyonu", "Ses Modelleri", "Linux Sistem Yönetimi", "Docker", "Git", "Ağ Yönetimi"],
+        skills: ["LLM Entegrasyonu", "Ses Modelleri", "Docker", "Git", "Ağ Yönetimi"],
     },
     {
         category: "Multimedya & Tasarım",
