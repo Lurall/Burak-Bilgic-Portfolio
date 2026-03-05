@@ -26,9 +26,9 @@ const socials = [
 // EmailJS hesabınızdan alıp buraya yapıştırın:
 // https://www.emailjs.com/
 // =============================================
-const EMAILJS_SERVICE_ID = "service_XXXXXX";   // EmailJS Service ID
-const EMAILJS_TEMPLATE_ID = "template_XXXXXX"; // EmailJS Template ID
-const EMAILJS_PUBLIC_KEY = "XXXXXXXXXXXXXX";    // EmailJS Public Key
+const EMAILJS_SERVICE_ID = "service_hlirj6k";   // EmailJS Service ID
+const EMAILJS_TEMPLATE_ID = "template_s8ip8hc"; // EmailJS Template ID
+const EMAILJS_PUBLIC_KEY = "ZsG8rneaSQJIfD6c8";    // EmailJS Public Key
 
 export default function Footer() {
     const formRef = useRef<HTMLFormElement>(null);
