@@ -100,8 +100,8 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             onClick={(e) => { e.preventDefault(); handleClick(link.href); }}
-                            className="text-[0.9rem] font-semibold relative cursor-pointer py-1"
-                            style={{ color: scrolled ? "#ffd700" : "#1e2850" }}
+                            className="text-[0.9rem] font-semibold relative cursor-pointer py-1 transition-colors duration-300"
+                            style={{ color: scrolled ? "#ffd700" : (theme === "dark" ? "#ffffff" : "#1e2850") }}
                             whileHover={{ color: "#ffd700" }}
                             transition={{ duration: 0.3 }}
                         >

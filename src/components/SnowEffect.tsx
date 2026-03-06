@@ -50,6 +50,15 @@ export default function SnowEffect() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             groundHeights = new Array(Math.ceil(canvas.width / BIN_WIDTH)).fill(0);
+
+            // Clean up settled snowflakes on resize so they don't float in mid-air
+            for (let i = snowflakes.length - 1; i >= 0; i--) {
+                if (snowflakes[i].state === 'settled') {
+                    snowflakes.splice(i, 1);
+                } else if (snowflakes[i].y > canvas.height) {
+                    snowflakes[i].y = -10;
+                }
+            }
         };
         resize();
         window.addEventListener("resize", resize);
