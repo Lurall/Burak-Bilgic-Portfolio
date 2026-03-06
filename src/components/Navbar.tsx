@@ -110,6 +110,7 @@ export default function Navbar() {
 
                 {/* Volume & Language Switcher (far right, absolute) */}
                 <div className="flex items-center gap-4 absolute right-6">
+                    <MusicPlayer />
                     <button
                         onClick={toggleLanguage}
                         className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110"
@@ -120,9 +121,6 @@ export default function Navbar() {
                             {language === "tr" ? "🇹🇷" : "🇺🇸"}
                         </span>
                     </button>
-                    <div className="hidden md:block">
-                        <MusicPlayer />
-                    </div>
                 </div>
             </div>
 
@@ -143,9 +141,6 @@ export default function Navbar() {
                             {link.label}
                         </a>
                     ))}
-                    <div className="flex items-center gap-4 pt-3">
-                        <MusicPlayer />
-                    </div>
                 </div>
             )}
         </nav>
