@@ -46,10 +46,16 @@ export default function SnowEffect() {
         window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseout", handleMouseLeave);
 
+        let isMobile = window.innerWidth < 768;
+        let targetFalling = isMobile ? 34 : 120; // Reduced amount by 40%
+
         const resize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             groundHeights = new Array(Math.ceil(canvas.width / BIN_WIDTH)).fill(0);
+
+            isMobile = window.innerWidth < 768;
+            targetFalling = isMobile ? 34 : 120;
 
             // Clean up settled snowflakes on resize so they don't float in mid-air
             for (let i = snowflakes.length - 1; i >= 0; i--) {
@@ -63,9 +69,7 @@ export default function SnowEffect() {
         resize();
         window.addEventListener("resize", resize);
 
-        const isMobile = window.innerWidth < 768;
         const initialSpawn = isMobile ? 34 : 120; // Reduced amount by 40%
-        const targetFalling = isMobile ? 34 : 120; // Reduced amount by 40%
 
         // Initial spawn
         for (let i = 0; i < initialSpawn; i++) {
@@ -136,11 +140,17 @@ export default function SnowEffect() {
                 if (flake.x > canvas.width) flake.x = 0;
                 if (flake.x < 0) flake.x = canvas.width;
 
-                // Use fast rectangle drawing instead of expensive arc drawing
                 ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
-                // Render as small 2x2 or 3x3 squares (looks identical to circles on hi-dpi screens but 10x faster)
-                const size = flake.radius * 2;
-                ctx.fillRect(flake.x - flake.radius, flake.y - flake.radius, size, size);
+                if (isMobile) {
+                    // Mobile: Fast rectangle drawing for performance
+                    const size = flake.radius * 2;
+                    ctx.fillRect(flake.x - flake.radius, flake.y - flake.radius, size, size);
+                } else {
+                    // Desktop: High-quality circular snowflakes
+                    ctx.beginPath();
+                    ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
 
             // Interactive mouse scattering against the accumulated ground
