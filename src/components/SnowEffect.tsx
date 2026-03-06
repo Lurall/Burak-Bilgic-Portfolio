@@ -97,7 +97,7 @@ export default function SnowEffect() {
                     }
                     flake.y += flake.speed;
                     flake.swing += flake.swingSpeed;
-                    flake.x += Math.sin(flake.swing) * 0.4;
+                    flake.x += Math.sin(flake.swing) * 0.05;
 
                     if (flake.y >= canvas.height - 2) {
                         const binIndex = Math.floor(flake.x / BIN_WIDTH);
