@@ -50,7 +50,7 @@ export default function Home() {
       {/* Fixed background that changes color */}
       <motion.div
         className="fixed inset-0"
-        style={{ backgroundColor: bgColor, zIndex: -1 }}
+        style={{ backgroundColor: bgColor, zIndex: -1, transition: "background-color 1s ease-in-out" }}
       />
 
       {/* Mountains - fixed, persistent, with blur on scroll */}
@@ -62,7 +62,7 @@ export default function Home() {
         <Hero />
 
         {/* Content sections - semi-transparent so mountains show through blurred */}
-        <motion.div className="w-full" style={{ backgroundColor: contentBgColor }}>
+        <motion.div className="w-full" style={{ backgroundColor: contentBgColor, transition: "background-color 1s ease-in-out" }}>
           <About />
           <Skills />
           <Projects />
