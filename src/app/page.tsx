@@ -47,10 +47,29 @@ export default function Home() {
       {/* Navbar */}
       <Navbar />
 
-      {/* Fixed background that changes color */}
+      {/* Fixed background that changes color based on scroll */}
+      {/* Light Mode Layer */}
       <motion.div
         className="fixed inset-0"
-        style={{ backgroundColor: bgColor, zIndex: -1, transition: "background-color 1s ease-in-out" }}
+        style={{
+          backgroundColor: useMotionTemplate`rgb(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgB)})`,
+          zIndex: -2
+        }}
+        initial={{ opacity: 1 }}
+        animate={{ opacity: theme === 'light' ? 1 : 0 }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+      />
+
+      {/* Dark Mode Layer */}
+      <motion.div
+        className="fixed inset-0"
+        style={{
+          backgroundColor: useMotionTemplate`rgb(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgB)})`,
+          zIndex: -1
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: theme === 'dark' ? 1 : 0 }}
+        transition={{ duration: 1, ease: "easeInOut" }}
       />
 
       {/* Mountains - fixed, persistent, with blur on scroll */}
@@ -62,12 +81,27 @@ export default function Home() {
         <Hero />
 
         {/* Content sections - semi-transparent so mountains show through blurred */}
-        <motion.div className="w-full" style={{ backgroundColor: contentBgColor, transition: "background-color 1s ease-in-out" }}>
+        {/* We use two overlapping backgrounds for the content section as well to crossfade cleanly */}
+        <div className="relative w-full">
+          <motion.div
+            className="absolute inset-0 z-[-1]"
+            style={{ backgroundColor: useMotionTemplate`rgba(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgB)}, 0.85)` }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: theme === 'light' ? 1 : 0 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute inset-0 z-[-1]"
+            style={{ backgroundColor: useMotionTemplate`rgba(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgB)}, 0.70)` }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: theme === 'dark' ? 1 : 0 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          />
           <About />
           <Skills />
           <Projects />
           <Footer />
-        </motion.div>
+        </div>
       </div>
     </>
   );
