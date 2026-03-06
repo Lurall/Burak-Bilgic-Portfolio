@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaSun, FaMoon } from "react-icons/fa";
 import MusicPlayer from "./MusicPlayer";
 import { useLanguage } from "@/context/LanguageContext";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const { language, setLanguage, t } = useLanguage();
+    const { theme, toggleTheme } = useTheme();
 
     const navLinks = [
         { label: t.nav.home, href: "#hero" },
@@ -108,9 +110,17 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                {/* Volume & Language Switcher (far right, absolute) */}
+                {/* Volume, Theme & Language Switcher (far right, absolute) */}
                 <div className="flex items-center gap-4 absolute right-6">
                     <MusicPlayer />
+                    <button
+                        onClick={toggleTheme}
+                        className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110"
+                        style={{ border: "2px solid rgba(255,255,255,0.2)", background: "rgba(0,0,0,0.2)", color: "white" }}
+                        aria-label="Toggle Theme"
+                    >
+                        {theme === "dark" ? <FaMoon size={14} /> : <FaSun size={14} />}
+                    </button>
                     <button
                         onClick={toggleLanguage}
                         className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110 uppercase text-white font-bold"
