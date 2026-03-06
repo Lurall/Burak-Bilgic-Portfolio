@@ -10,9 +10,9 @@ export default function MountainScene() {
     const { theme } = useTheme();
 
     // Celestial body (Sun/Moon) moves symmetrically from left (15%) to right (85%)
-    const celestialX = useTransform(scrollYProgress, [0, 0.5, 1], ["15%", "50%", "85%"]);
+    const celestialX = useTransform(scrollYProgress, [0, 0.5, 1], ["calc(15vw - 50%)", "calc(50vw - 50%)", "calc(85vw - 50%)"]);
     // Celestial body arcs up then down symmetrically
-    const celestialY = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], ["65%", "40%", "30%", "40%", "65%"]);
+    const celestialY = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], ["calc(65vh - 50%)", "calc(40vh - 50%)", "calc(30vh - 50%)", "calc(40vh - 50%)", "calc(65vh - 50%)"]);
 
     // Sun color transitions
     const sunColor1 = useTransform(
@@ -67,10 +67,10 @@ export default function MountainScene() {
                         <motion.div
                             style={{
                                 position: "absolute",
-                                left: celestialX,
-                                top: celestialY,
-                                translateX: "-50%",
-                                translateY: "-50%",
+                                left: 0,
+                                top: 0,
+                                x: celestialX,
+                                y: celestialY,
                                 color: sunColor1,
                                 filter: sunFilter,
                                 zIndex: 0,
@@ -78,6 +78,8 @@ export default function MountainScene() {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
+                                willChange: "transform, filter",
+                                z: 0,
                             }}
                         >
                             <FaSun />
@@ -86,10 +88,10 @@ export default function MountainScene() {
                         <motion.div
                             style={{
                                 position: "absolute",
-                                left: celestialX,
-                                top: celestialY,
-                                translateX: "-50%",
-                                translateY: "-50%",
+                                left: 0,
+                                top: 0,
+                                x: celestialX,
+                                y: celestialY,
                                 width: 250,
                                 height: 250,
                                 borderRadius: "50%",
@@ -97,16 +99,18 @@ export default function MountainScene() {
                                 opacity: 0.2,
                                 filter: "blur(40px)",
                                 zIndex: 0,
+                                willChange: "transform, background",
+                                z: 0,
                             }}
                         />
                         {/* Extra glow */}
                         <motion.div
                             style={{
                                 position: "absolute",
-                                left: celestialX,
-                                top: celestialY,
-                                translateX: "-50%",
-                                translateY: "-50%",
+                                left: 0,
+                                top: 0,
+                                x: celestialX,
+                                y: celestialY,
                                 width: 400,
                                 height: 400,
                                 borderRadius: "50%",
@@ -114,6 +118,8 @@ export default function MountainScene() {
                                 opacity: 0.08,
                                 filter: "blur(60px)",
                                 zIndex: 0,
+                                willChange: "transform, background",
+                                z: 0,
                             }}
                         />
                     </motion.div>
@@ -154,10 +160,11 @@ export default function MountainScene() {
                         <motion.div
                             style={{
                                 position: "absolute",
-                                left: celestialX,
-                                top: celestialY,
-                                translateX: "-50%",
-                                translateY: "-50%",
+                                left: 0,
+                                top: 0,
+                                x: celestialX,
+                                y: celestialY,
+                                rotate: "-20deg",
                                 color: "white",
                                 filter: "drop-shadow(0 0 15px rgba(255,255,255,0.6))",
                                 zIndex: 0,
@@ -165,8 +172,8 @@ export default function MountainScene() {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                // Rotate slightly to match FaMoon visual style in the sky
-                                transform: "rotate(-20deg)"
+                                willChange: "transform",
+                                z: 0,
                             }}
                         >
                             <FaMoon />
@@ -175,16 +182,18 @@ export default function MountainScene() {
                         <motion.div
                             style={{
                                 position: "absolute",
-                                left: celestialX,
-                                top: celestialY,
-                                translateX: "-50%",
-                                translateY: "-50%",
+                                left: 0,
+                                top: 0,
+                                x: celestialX,
+                                y: celestialY,
                                 width: 180,
                                 height: 180,
                                 borderRadius: "50%",
                                 background: "rgba(255, 255, 255, 0.15)",
                                 filter: "blur(30px)",
                                 zIndex: 0,
+                                willChange: "transform",
+                                z: 0,
                             }}
                         />
                     </motion.div>
@@ -197,6 +206,8 @@ export default function MountainScene() {
                 style={{
                     height: "100vh",
                     filter: mountainBlurFilter,
+                    willChange: "transform, filter",
+                    z: 0,
                 }}
             >
                 <svg
