@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from "framer-motion";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 import { useTheme } from "@/context/ThemeContext";
 
@@ -54,7 +55,7 @@ export default function MountainScene() {
                         transition={{ duration: 0.8, ease: "easeInOut" }}
                         className="absolute inset-0 z-0"
                     >
-                        {/* Sun */}
+                        {/* Sun Icon */}
                         <motion.div
                             style={{
                                 position: "absolute",
@@ -62,15 +63,17 @@ export default function MountainScene() {
                                 top: celestialY,
                                 translateX: "-50%",
                                 translateY: "-50%",
-                                width: 120,
-                                height: 120,
-                                borderRadius: "50%",
-                                background: sunColor1,
-                                opacity: 0.9,
-                                filter: "blur(2px)",
+                                color: sunColor1,
+                                filter: "drop-shadow(0 0 10px rgba(255, 215, 0, 0.8))",
                                 zIndex: 0,
+                                fontSize: "120px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
                             }}
-                        />
+                        >
+                            <FaSun />
+                        </motion.div>
                         {/* Sun glow */}
                         <motion.div
                             style={{
@@ -139,7 +142,7 @@ export default function MountainScene() {
                             />
                         ))}
 
-                        {/* Crescent Moon (Left-facing / Missing part left -> 180 deg flip) */}
+                        {/* Moon Icon */}
                         <motion.div
                             style={{
                                 position: "absolute",
@@ -147,17 +150,19 @@ export default function MountainScene() {
                                 top: celestialY,
                                 translateX: "-50%",
                                 translateY: "-50%",
-                                width: 120,
-                                height: 120,
-                                borderRadius: "50%",
-                                background: "transparent",
-                                // Changing inset shadow to project from the opposite side to flip it 180 degrees
-                                boxShadow: "inset 25px 0px 0px 5px rgba(255, 255, 255, 0.9)",
-                                filter: "blur(1px) drop-shadow(0 0 15px rgba(255,255,255,0.4))",
+                                color: "white",
+                                filter: "drop-shadow(0 0 15px rgba(255,255,255,0.6))",
                                 zIndex: 0,
-                                transform: "rotate(15deg)"
+                                fontSize: "100px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                // Rotate slightly to match FaMoon visual style in the sky
+                                transform: "rotate(-20deg)"
                             }}
-                        />
+                        >
+                            <FaMoon />
+                        </motion.div>
                         {/* Moon glow */}
                         <motion.div
                             style={{
