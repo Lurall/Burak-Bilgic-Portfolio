@@ -54,8 +54,13 @@ export default function SnowEffect() {
         resize();
         window.addEventListener("resize", resize);
 
+        const isMobile = window.innerWidth < 768;
+        const initialSpawn = isMobile ? 30 : 70;
+        const targetFalling = isMobile ? 30 : 80;
+        const maxSettled = isMobile ? 150 : 1000;
+
         // Initial spawn
-        for (let i = 0; i < 70; i++) {
+        for (let i = 0; i < initialSpawn; i++) {
             snowflakes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -103,20 +108,22 @@ export default function SnowEffect() {
                     }
                 } else if (flake.state === 'settled') {
                     settledCount++;
-                    const dist = Math.hypot(flake.x - mouseX, flake.y - mouseY);
-                    if (dist < 100) { // Mouse interaction radius
-                        flake.state = 'scattering';
-                        const angle = Math.atan2(flake.y - mouseY, flake.x - mouseX);
-                        const force = (100 - dist) / 100;
+                    if (!isMobile && mouseX !== -1000 && mouseY !== -1000 && Math.abs(flake.x - mouseX) < 100 && Math.abs(flake.y - mouseY) < 100) {
+                        const dist = Math.hypot(flake.x - mouseX, flake.y - mouseY);
+                        if (dist < 100) { // Mouse interaction radius
+                            flake.state = 'scattering';
+                            const angle = Math.atan2(flake.y - mouseY, flake.x - mouseX);
+                            const force = (100 - dist) / 100;
 
-                        // Scatter out and up
-                        flake.vx = Math.cos(angle) * force * 8 + (Math.random() - 0.5) * 4;
-                        flake.vy = Math.sin(angle) * force * 8 - Math.random() * 5 - 4;
+                            // Scatter out and up
+                            flake.vx = Math.cos(angle) * force * 8 + (Math.random() - 0.5) * 4;
+                            flake.vy = Math.sin(angle) * force * 8 - Math.random() * 5 - 4;
 
-                        // Reduce the ground pile
-                        const binIndex = Math.floor(flake.x / BIN_WIDTH);
-                        if (binIndex >= 0 && binIndex < groundHeights.length) {
-                            groundHeights[binIndex] = Math.max(0, groundHeights[binIndex] - flake.radius * 0.4);
+                            // Reduce the ground pile
+                            const binIndex = Math.floor(flake.x / BIN_WIDTH);
+                            if (binIndex >= 0 && binIndex < groundHeights.length) {
+                                groundHeights[binIndex] = Math.max(0, groundHeights[binIndex] - flake.radius * 0.4);
+                            }
                         }
                     }
                 } else if (flake.state === 'scattering') {
@@ -143,7 +150,7 @@ export default function SnowEffect() {
             });
 
             // Cap the total settled flakes to avoid performance issues
-            while (settledCount > 1000) {
+            while (settledCount > maxSettled) {
                 const idx = snowflakes.findIndex(f => f.state === 'settled');
                 if (idx !== -1) {
                     const f = snowflakes[idx];
@@ -159,8 +166,8 @@ export default function SnowEffect() {
             }
 
             // Always maintain fresh falling snowflakes from the top
-            if (freshFallingCount < 80) {
-                const toSpawn = Math.min(3, 80 - freshFallingCount);
+            if (freshFallingCount < targetFalling) {
+                const toSpawn = Math.min(3, targetFalling - freshFallingCount);
                 for (let i = 0; i < toSpawn; i++) {
                     snowflakes.push({
                         x: Math.random() * canvas.width,
