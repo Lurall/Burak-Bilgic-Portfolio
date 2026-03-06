@@ -73,10 +73,10 @@ export default function SnowEffect() {
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 2.5 + 0.8,
-                speed: (Math.random() * 0.15 + 0.05) * (isMobile ? 0.8 : 1), // Extemely slow and gentle
+                speed: (Math.random() * 0.05 + 0.015) * (isMobile ? 0.8 : 1), // Lo-fi tempo ultra slow
                 opacity: Math.random() * 0.5 + 0.2,
                 swing: Math.random() * Math.PI * 2,
-                swingSpeed: Math.random() * 0.004 + 0.001,
+                swingSpeed: Math.random() * 0.002 + 0.0005,
                 state: 'falling',
                 vx: 0,
                 vy: 0,
@@ -159,7 +159,7 @@ export default function SnowEffect() {
                                 x: i * BIN_WIDTH,
                                 y: canvas.height - groundHeights[i],
                                 radius: Math.random() * 2 + 1,
-                                speed: (Math.random() * 0.15 + 0.05) * (isMobile ? 0.8 : 1), // Extremely slow
+                                speed: (Math.random() * 0.05 + 0.015) * (isMobile ? 0.8 : 1), // Ultra slow
                                 opacity: Math.random() * 0.5 + 0.2,
                                 swing: 0,
                                 swingSpeed: 0,
@@ -192,10 +192,10 @@ export default function SnowEffect() {
                         x: Math.random() * canvas.width,
                         y: -10,
                         radius: Math.random() * 2.5 + 0.8,
-                        speed: (Math.random() * 0.2 + 0.08) * (isMobile ? 0.8 : 1), // Extremely slow
+                        speed: (Math.random() * 0.06 + 0.02) * (isMobile ? 0.8 : 1), // Ultra slow
                         opacity: Math.random() * 0.5 + 0.2,
                         swing: Math.random() * Math.PI * 2,
-                        swingSpeed: Math.random() * 0.004 + 0.001,
+                        swingSpeed: Math.random() * 0.002 + 0.0005,
                         state: 'falling',
                         vx: 0,
                         vy: 0,
