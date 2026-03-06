@@ -107,8 +107,10 @@ export default function SnowEffect() {
                         }
 
                         if (flake.y >= canvas.height - pileH) {
-                            // Accumulate height
-                            if (binIndex >= 0 && binIndex < groundHeights.length) {
+                            // Accumulate height only if under limit
+                            const maxPileHeight = isMobile ? 45 : 150; // "One finger" on mobile, taller on desktop
+
+                            if (binIndex >= 0 && binIndex < groundHeights.length && groundHeights[binIndex] < maxPileHeight) {
                                 // Add to current bin and slightly to neighbors for smoothing
                                 groundHeights[binIndex] += flake.radius * 0.6;
                                 if (binIndex > 0) groundHeights[binIndex - 1] += flake.radius * 0.2;
