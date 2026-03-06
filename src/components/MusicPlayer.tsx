@@ -10,6 +10,7 @@ export default function MusicPlayer() {
     const prevVolumeRef = useRef(0.05);
     const [showVolume, setShowVolume] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     const tryPlay = useCallback(() => {
         if (hasStartedRef.current) return;
@@ -21,6 +22,21 @@ export default function MusicPlayer() {
     }, []);
 
     useEffect(() => {
+        // Check if on mobile on mount and window resize
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    useEffect(() => {
+        // Only initialize audio if NOT on mobile
+        if (isMobile) return;
+
         const audio = new Audio("/audio/lofi.mp3");
         audio.loop = true;
         audio.volume = volume;
@@ -51,7 +67,7 @@ export default function MusicPlayer() {
                 audioRef.current = null;
             }
         };
-    }, []);
+    }, [isMobile]);
 
     const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
         const v = parseFloat(e.target.value);
@@ -92,9 +108,12 @@ export default function MusicPlayer() {
         };
     }, []);
 
+    // Completely unmount on mobile devices to save memory/processing
+    if (isMobile) return null;
+
     return (
         <div
-            className="relative"
+            className="relative hidden md:block"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
