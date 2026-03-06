@@ -81,10 +81,10 @@ export default function Navbar() {
                 </svg>
             </div>
 
-            <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between md:justify-center relative">
+            <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between md:justify-center relative min-h-[36px]">
                 {/* Mobile Open Button */}
                 <button
-                    className="md:hidden flex flex-col gap-[5px] bg-transparent border-none p-1 cursor-pointer absolute left-6"
+                    className="md:hidden flex flex-col gap-[5px] bg-transparent border-none p-1 cursor-pointer absolute left-6 top-1/2 -translate-y-1/2"
                     onClick={() => setMobileOpen(!mobileOpen)}
                     aria-label="Menu"
                 >
@@ -117,7 +117,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Volume, Theme & Language Switcher (far right, absolute) */}
-                <div className="flex items-center gap-4 absolute right-6">
+                <div className="flex items-center gap-4 absolute right-6 top-1/2 -translate-y-1/2">
                     <MusicPlayer />
                     <button
                         onClick={toggleTheme}
