@@ -18,12 +18,12 @@ export default function MountainScene() {
     const sunColor1 = useTransform(
         scrollYProgress,
         [0, 0.5, 1],
-        ["#FFD700", "#FF8C00", "#FF6347"]
+        ["#FFD700", "#FF8C00", "#FFE4B5"] // End with a bright, glowing yellow/peach so it stands out against the dark orange footer
     );
     const sunColor2 = useTransform(
         scrollYProgress,
         [0, 0.5, 1],
-        ["#FFA500", "#FF6347", "#FF4500"]
+        ["#FFA500", "#FF6347", "#FFD700"]
     );
 
     // Mountains get slight blur as user scrolls
