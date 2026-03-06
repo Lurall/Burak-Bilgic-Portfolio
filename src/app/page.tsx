@@ -17,28 +17,29 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const { theme } = useTheme();
 
-  // We will no longer animate backgroundColor directly.
-  // Instead, we will keep two static backgrounds and animate their opacity.
+  // We use 4 stacked layers and crossfade their opacity 
+  // to replicate the RGB interpolation perfectly on the GPU.
 
-  // Light Mode Static Colors
-  const lightBgTop = "rgb(111, 172, 252)"; // start color
-  const lightBgBottom = "rgb(235, 140, 60)"; // target color
+  // Light Mode Colors (Blue -> Purple -> Pink -> Orange)
+  const lightColors = [
+    "rgb(111, 172, 252)",
+    "rgb(170, 145, 190)",
+    "rgb(220, 120, 110)",
+    "rgb(235, 140, 60)"
+  ];
 
-  // Dark Mode Static Colors
-  const darkBgTop = "rgb(7, 10, 25)";
-  const darkBgBottom = "rgb(26, 34, 68)";
+  // Dark Mode Colors
+  const darkColors = [
+    "rgb(7, 10, 25)",
+    "rgb(12, 16, 34)",
+    "rgb(18, 24, 46)",
+    "rgb(26, 34, 68)"
+  ];
 
-  // The content sections need semi-transparent backgrounds
-  const lightContentBgTop = "rgba(111, 172, 252, 0.85)";
-  const lightContentBgBottom = "rgba(235, 140, 60, 0.85)";
-
-  const darkContentBgTop = "rgba(7, 10, 25, 0.70)";
-  const darkContentBgBottom = "rgba(26, 34, 68, 0.70)";
-
-  // We animate opacity from 0 to 1 as user scrolls down
-  const scrollOpacity = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
-  // And the reverse for the top layer
-  const scrollOpacityReverse = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  // Opacity phases corresponding to the original [0, 0.3, 0.6, 1] scroll mapping
+  const opacity2 = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+  const opacity3 = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+  const opacity4 = useTransform(scrollYProgress, [0.6, 1], [0, 1]);
 
   return (
     <>
@@ -52,30 +53,22 @@ export default function Home() {
 
       {/* --- Light Mode Backgrounds --- */}
       {theme === 'light' && (
-        <>
-          <motion.div
-            className="fixed inset-0 pointer-events-none"
-            style={{ backgroundColor: lightBgTop, zIndex: -2, opacity: scrollOpacityReverse, willChange: 'opacity' }}
-          />
-          <motion.div
-            className="fixed inset-0 pointer-events-none"
-            style={{ backgroundColor: lightBgBottom, zIndex: -2, opacity: scrollOpacity, willChange: 'opacity' }}
-          />
-        </>
+        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -2 }}>
+          <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+          <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+          <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+          <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
+        </div>
       )}
 
       {/* --- Dark Mode Backgrounds --- */}
       {theme === 'dark' && (
-        <>
-          <motion.div
-            className="fixed inset-0 pointer-events-none"
-            style={{ backgroundColor: darkBgTop, zIndex: -1, opacity: scrollOpacityReverse, willChange: 'opacity' }}
-          />
-          <motion.div
-            className="fixed inset-0 pointer-events-none"
-            style={{ backgroundColor: darkBgBottom, zIndex: -1, opacity: scrollOpacity, willChange: 'opacity' }}
-          />
-        </>
+        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -1 }}>
+          <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+          <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+          <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+          <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+        </div>
       )}
 
       {/* Mountains - fixed, persistent, with blur on scroll */}
@@ -86,33 +79,23 @@ export default function Home() {
         {/* Hero section - fully transparent to show mountains */}
         <Hero />
 
-        {/* Content sections - semi-transparent so mountains show through blurred */}
-        {/* We use two overlapping backgrounds for the content section as well to crossfade cleanly via opacity */}
-
+        {/* Content sections - semi-transparent background with layered opacity */}
         {theme === 'light' && (
-          <>
-            <motion.div
-              className="absolute inset-0 z-[-1] pointer-events-none"
-              style={{ backgroundColor: lightContentBgTop, opacity: scrollOpacityReverse, willChange: 'opacity' }}
-            />
-            <motion.div
-              className="absolute inset-0 z-[-1] pointer-events-none"
-              style={{ backgroundColor: lightContentBgBottom, opacity: scrollOpacity, willChange: 'opacity' }}
-            />
-          </>
+          <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.85 }}>
+            <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
+          </div>
         )}
 
         {theme === 'dark' && (
-          <>
-            <motion.div
-              className="absolute inset-0 z-[-1] pointer-events-none"
-              style={{ backgroundColor: darkContentBgTop, opacity: scrollOpacityReverse, willChange: 'opacity' }}
-            />
-            <motion.div
-              className="absolute inset-0 z-[-1] pointer-events-none"
-              style={{ backgroundColor: darkContentBgBottom, opacity: scrollOpacity, willChange: 'opacity' }}
-            />
-          </>
+          <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.70 }}>
+            <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+          </div>
         )}
         <About />
         <Skills />
