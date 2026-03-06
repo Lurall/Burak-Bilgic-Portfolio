@@ -64,9 +64,8 @@ export default function SnowEffect() {
         window.addEventListener("resize", resize);
 
         const isMobile = window.innerWidth < 768;
-        const initialSpawn = isMobile ? 30 : 70;
-        const targetFalling = isMobile ? 30 : 80;
-        const maxSettled = isMobile ? 150 : 1000;
+        const initialSpawn = isMobile ? 80 : 200;
+        const targetFalling = isMobile ? 80 : 200;
 
         // Initial spawn
         for (let i = 0; i < initialSpawn; i++) {
@@ -88,11 +87,11 @@ export default function SnowEffect() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             let freshFallingCount = 0;
-            let settledCount = 0;
 
-            snowflakes.forEach((flake) => {
+            // Update and draw active flakes
+            for (let i = snowflakes.length - 1; i >= 0; i--) {
+                const flake = snowflakes[i];
                 if (flake.state === 'falling') {
-                    // Only count flakes in the upper 80% as "fresh" falling snow
                     if (flake.y < canvas.height * 0.8) {
                         freshFallingCount++;
                     }
@@ -108,31 +107,16 @@ export default function SnowEffect() {
                         }
 
                         if (flake.y >= canvas.height - pileH) {
-                            flake.state = 'settled';
-                            flake.y = canvas.height - pileH;
+                            // Accumulate height
                             if (binIndex >= 0 && binIndex < groundHeights.length) {
-                                groundHeights[binIndex] += flake.radius * 0.4; // Pile grows
+                                // Add to current bin and slightly to neighbors for smoothing
+                                groundHeights[binIndex] += flake.radius * 0.6;
+                                if (binIndex > 0) groundHeights[binIndex - 1] += flake.radius * 0.2;
+                                if (binIndex < groundHeights.length - 1) groundHeights[binIndex + 1] += flake.radius * 0.2;
                             }
-                        }
-                    }
-                } else if (flake.state === 'settled') {
-                    settledCount++;
-                    if (!isMobile && mouseX !== -1000 && mouseY !== -1000 && Math.abs(flake.x - mouseX) < 100 && Math.abs(flake.y - mouseY) < 100) {
-                        const dist = Math.hypot(flake.x - mouseX, flake.y - mouseY);
-                        if (dist < 100) { // Mouse interaction radius
-                            flake.state = 'scattering';
-                            const angle = Math.atan2(flake.y - mouseY, flake.x - mouseX);
-                            const force = (100 - dist) / 100;
-
-                            // Scatter out and up
-                            flake.vx = Math.cos(angle) * force * 8 + (Math.random() - 0.5) * 4;
-                            flake.vy = Math.sin(angle) * force * 8 - Math.random() * 5 - 4;
-
-                            // Reduce the ground pile
-                            const binIndex = Math.floor(flake.x / BIN_WIDTH);
-                            if (binIndex >= 0 && binIndex < groundHeights.length) {
-                                groundHeights[binIndex] = Math.max(0, groundHeights[binIndex] - flake.radius * 0.4);
-                            }
+                            // Remove flake from array completely - no longer rendered individually
+                            snowflakes.splice(i, 1);
+                            continue;
                         }
                     }
                 } else if (flake.state === 'scattering') {
@@ -140,11 +124,9 @@ export default function SnowEffect() {
                     flake.y += flake.vy;
                     flake.vy += 0.15; // Gravity
 
-                    // Allow them to bounce around a bit before transitioning back to falling
-                    if (flake.vy > 1.5) { // When gravity pulls them back down strongly enough
+                    if (flake.vy > 1.5) {
                         flake.state = 'falling';
-                        flake.vx = 0; // Reset horizontal burst velocity
-                        // Keep their opacity and radius the same, just return them to the normal snow cycle
+                        flake.vx = 0;
                     }
                 }
 
@@ -156,27 +138,52 @@ export default function SnowEffect() {
                 ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
                 ctx.fill();
-            });
+            }
 
-            // Cap the total settled flakes to avoid performance issues
-            while (settledCount > maxSettled) {
-                const idx = snowflakes.findIndex(f => f.state === 'settled');
-                if (idx !== -1) {
-                    const f = snowflakes[idx];
-                    const binIndex = Math.floor(f.x / BIN_WIDTH);
-                    if (binIndex >= 0 && binIndex < groundHeights.length) {
-                        groundHeights[binIndex] = Math.max(0, groundHeights[binIndex] - f.radius * 0.4);
+            // Interactive mouse scattering against the accumulated ground
+            if (!isMobile && mouseX !== -1000 && mouseY !== -1000 && mouseY > canvas.height - 100) {
+                const centerBin = Math.floor(mouseX / BIN_WIDTH);
+                const scatterRadius = 15; // Bins
+
+                for (let i = Math.max(0, centerBin - scatterRadius); i < Math.min(groundHeights.length, centerBin + scatterRadius); i++) {
+                    const distBins = Math.abs(i - centerBin);
+                    const effect = (scatterRadius - distBins) / scatterRadius;
+
+                    if (groundHeights[i] > 0 && effect > 0) {
+                        // Throw some snow back up
+                        if (Math.random() < 0.1 * effect) {
+                            snowflakes.push({
+                                x: i * BIN_WIDTH,
+                                y: canvas.height - groundHeights[i],
+                                radius: Math.random() * 2 + 1,
+                                speed: Math.random() * 0.8 + 0.3,
+                                opacity: Math.random() * 0.5 + 0.2,
+                                swing: 0,
+                                swingSpeed: 0,
+                                state: 'scattering',
+                                vx: (Math.random() - 0.5) * 6 * effect,
+                                vy: -Math.random() * 6 - 2,
+                            });
+                        }
+                        // Erode ground
+                        groundHeights[i] = Math.max(0, groundHeights[i] - 2 * effect);
                     }
-                    snowflakes.splice(idx, 1);
-                    settledCount--;
-                } else {
-                    break;
                 }
             }
 
-            // Always maintain fresh falling snowflakes from the top
+            // Draw the accumulated ground as a single continuous polygon
+            ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height);
+            for (let i = 0; i < groundHeights.length; i++) {
+                ctx.lineTo(i * BIN_WIDTH, canvas.height - groundHeights[i]);
+            }
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.fill();
+
+            // Always maintain fresh falling snowflakes
             if (freshFallingCount < targetFalling) {
-                const toSpawn = Math.min(3, targetFalling - freshFallingCount);
+                const toSpawn = Math.min(5, targetFalling - freshFallingCount);
                 for (let i = 0; i < toSpawn; i++) {
                     snowflakes.push({
                         x: Math.random() * canvas.width,
