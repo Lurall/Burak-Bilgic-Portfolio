@@ -113,7 +113,7 @@ export default function Footer() {
                     <motion.div
                         initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
+                        viewport={{ once: true, margin: "150px" }}
                         transition={{ duration: 0.6 }}
                     >
                         <p className="text-[1.1rem] leading-[1.8] font-light mb-10" style={{ color: "var(--text-dim)" }}>
@@ -148,7 +148,7 @@ export default function Footer() {
                     <motion.div
                         initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
+                        viewport={{ once: true, margin: "150px" }}
                         transition={{ duration: 0.6 }}
                     >
                         <form ref={formRef} onSubmit={handleSubmit} className="p-5 md:p-8 rounded-2xl" style={{ background: "rgba(255, 255, 255, 0.05)", backdropFilter: "blur(20px)", border: "1px solid var(--border)" }}>

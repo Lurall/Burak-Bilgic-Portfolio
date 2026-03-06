@@ -65,8 +65,8 @@ export default function Projects() {
                             key={project.title}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ duration: 0.5, delay: index * 0.12 }}
+                            viewport={{ once: true, margin: "150px" }}
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
                         >
                             <ParticleBurst>
                                 <motion.div
