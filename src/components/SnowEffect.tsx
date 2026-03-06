@@ -64,8 +64,8 @@ export default function SnowEffect() {
         window.addEventListener("resize", resize);
 
         const isMobile = window.innerWidth < 768;
-        const initialSpawn = isMobile ? 56 : 200; // Reduced by 30% on mobile
-        const targetFalling = isMobile ? 56 : 200; // Reduced by 30% on mobile
+        const initialSpawn = isMobile ? 34 : 120; // Reduced amount by 40%
+        const targetFalling = isMobile ? 34 : 120; // Reduced amount by 40%
 
         // Initial spawn
         for (let i = 0; i < initialSpawn; i++) {
@@ -73,7 +73,7 @@ export default function SnowEffect() {
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 2.5 + 0.8,
-                speed: (Math.random() * 0.8 + 0.3) * (isMobile ? 0.8 : 1), // 20% slower on mobile
+                speed: (Math.random() * 0.4 + 0.15) * (isMobile ? 0.8 : 1), // 50% slower, 20% slower on mobile
                 opacity: Math.random() * 0.5 + 0.2,
                 swing: Math.random() * Math.PI * 2,
                 swingSpeed: Math.random() * 0.008 + 0.003,
@@ -159,7 +159,7 @@ export default function SnowEffect() {
                                 x: i * BIN_WIDTH,
                                 y: canvas.height - groundHeights[i],
                                 radius: Math.random() * 2 + 1,
-                                speed: (Math.random() * 0.8 + 0.3) * (isMobile ? 0.8 : 1), // Follow mobile speed rules
+                                speed: (Math.random() * 0.4 + 0.15) * (isMobile ? 0.8 : 1), // 50% slower
                                 opacity: Math.random() * 0.5 + 0.2,
                                 swing: 0,
                                 swingSpeed: 0,
@@ -192,7 +192,7 @@ export default function SnowEffect() {
                         x: Math.random() * canvas.width,
                         y: -10,
                         radius: Math.random() * 2.5 + 0.8,
-                        speed: (Math.random() * 1.0 + 0.4) * (isMobile ? 0.8 : 1), // 20% slower on mobile
+                        speed: (Math.random() * 0.5 + 0.2) * (isMobile ? 0.8 : 1), // 50% slower, 20% slower on mobile
                         opacity: Math.random() * 0.5 + 0.2,
                         swing: Math.random() * Math.PI * 2,
                         swingSpeed: Math.random() * 0.008 + 0.003,
