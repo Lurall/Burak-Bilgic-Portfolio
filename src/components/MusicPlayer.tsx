@@ -6,8 +6,8 @@ import { FaSnowflake, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 export default function MusicPlayer() {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const hasStartedRef = useRef(false);
-    const [volume, setVolume] = useState(0.05);
-    const prevVolumeRef = useRef(0.05);
+    const [volume, setVolume] = useState(0.025);
+    const prevVolumeRef = useRef(0.025);
     const [showVolume, setShowVolume] = useState(false);
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [isMobile, setIsMobile] = useState(false);
@@ -78,7 +78,7 @@ export default function MusicPlayer() {
 
     const toggleMute = () => {
         if (volume === 0) {
-            const restoredVolume = prevVolumeRef.current > 0 ? prevVolumeRef.current : 0.05;
+            const restoredVolume = prevVolumeRef.current > 0 ? prevVolumeRef.current : 0.025;
             setVolume(restoredVolume);
             if (audioRef.current) {
                 audioRef.current.volume = restoredVolume;
