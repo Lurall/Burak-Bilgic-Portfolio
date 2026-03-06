@@ -18,8 +18,6 @@ const socials = [
     { icon: FaYoutube, label: "YouTube", href: "https://youtube.com/@luralls" },
     { icon: FaXTwitter, label: "X", href: "https://x.com/Lurallvlr" },
     { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/brak._.bilgic/" },
-    { icon: SiKick, label: "Kick", href: "https://kick.com/lurall" },
-    { icon: FaTwitch, label: "Twitch", href: "https://www.twitch.tv/lurallvlr" },
 ];
 
 const EMAILJS_SERVICE_ID = "service_hlirj6k";   // EmailJS Service ID
