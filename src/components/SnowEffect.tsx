@@ -47,7 +47,7 @@ export default function SnowEffect() {
         window.addEventListener("mouseout", handleMouseLeave);
 
         let isMobile = window.innerWidth < 768;
-        let targetFalling = isMobile ? 34 : 120; // Reduced amount by 40%
+        let targetFalling = isMobile ? 15 : 120; // Reduced amount drastically for mobile
 
         const resize = () => {
             canvas.width = window.innerWidth;
@@ -55,7 +55,7 @@ export default function SnowEffect() {
             groundHeights = new Array(Math.ceil(canvas.width / BIN_WIDTH)).fill(0);
 
             isMobile = window.innerWidth < 768;
-            targetFalling = isMobile ? 34 : 120;
+            targetFalling = isMobile ? 15 : 120;
 
             // Clean up settled snowflakes on resize so they don't float in mid-air
             for (let i = snowflakes.length - 1; i >= 0; i--) {
@@ -69,7 +69,7 @@ export default function SnowEffect() {
         resize();
         window.addEventListener("resize", resize);
 
-        const initialSpawn = isMobile ? 34 : 120; // Reduced amount by 40%
+        const initialSpawn = isMobile ? 15 : 120; // Reduced amount drastically for mobile
 
         // Initial spawn
         for (let i = 0; i < initialSpawn; i++) {
