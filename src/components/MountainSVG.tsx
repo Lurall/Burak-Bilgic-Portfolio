@@ -18,13 +18,21 @@ export default function MountainScene() {
     const sunColor1 = useTransform(
         scrollYProgress,
         [0, 0.5, 1],
-        ["#FFD700", "#FF8C00", "#FFE4B5"] // End with a bright, glowing yellow/peach so it stands out against the dark orange footer
+        ["#FFD700", "#FF8C00", "#FF2400"] // Scarlet red (kızıl) at sunset
     );
     const sunColor2 = useTransform(
         scrollYProgress,
         [0, 0.5, 1],
-        ["#FFA500", "#FF6347", "#FFD700"]
+        ["#FFA500", "#FF6347", "#8B0000"] // Dark red glow
     );
+
+    // Dynamic glow for the sun icon
+    const sunGlowColor = useTransform(
+        scrollYProgress,
+        [0, 0.5, 1],
+        ["rgba(255, 215, 0, 0.9)", "rgba(255, 140, 0, 0.9)", "rgba(255, 36, 0, 0.9)"]
+    );
+    const sunFilter = useMotionTemplate`drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 30px ${sunGlowColor})`;
 
     // Mountains get slight blur as user scrolls
     const mountainBlur = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.36, 1.08]);
@@ -64,7 +72,7 @@ export default function MountainScene() {
                                 translateX: "-50%",
                                 translateY: "-50%",
                                 color: sunColor1,
-                                filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.9))",
+                                filter: sunFilter,
                                 zIndex: 0,
                                 fontSize: "120px",
                                 display: "flex",
