@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-    FaLinkedin, FaGithub, FaYoutube, FaInstagram, FaTwitch,
+    FaLinkedin, FaGithub, FaYoutube, FaTwitch,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { SiKick } from "react-icons/si";
@@ -16,8 +16,7 @@ const socials = [
     { icon: FaLinkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/burak-bilgiç-414b362b2/" },
     { icon: FaGithub, label: "GitHub", href: "https://github.com/Lurall" },
     { icon: FaYoutube, label: "YouTube", href: "https://youtube.com/@luralls" },
-    { icon: FaXTwitter, label: "X", href: "https://x.com/Lurallvlr" },
-    { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/brak._.bilgic/" },
+    { icon: FaXTwitter, label: "X", href: "" },
 ];
 
 const EMAILJS_SERVICE_ID = "service_hlirj6k";   // EmailJS Service ID
