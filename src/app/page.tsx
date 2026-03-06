@@ -79,28 +79,32 @@ export default function Home() {
         {/* Hero section - fully transparent to show mountains */}
         <Hero />
 
-        {/* Content sections - semi-transparent background with layered opacity */}
-        {theme === 'light' && (
-          <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.85 }}>
-            <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-          </div>
-        )}
+        {/* Content sections wrapper with its own relative scope so backgrounds map correctly */}
+        <div className="relative w-full">
+          {/* Content sections - semi-transparent background with layered opacity */}
+          {theme === 'light' && (
+            <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.85 }}>
+              <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+              <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+              <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+              <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
+            </div>
+          )}
 
-        {theme === 'dark' && (
-          <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.70 }}>
-            <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
-          </div>
-        )}
-        <About />
-        <Skills />
-        <Projects />
-        <Footer />
+          {theme === 'dark' && (
+            <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.70 }}>
+              <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+              <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+              <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+              <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+            </div>
+          )}
+
+          <About />
+          <Skills />
+          <Projects />
+          <Footer />
+        </div>
       </div>
     </>
   );
