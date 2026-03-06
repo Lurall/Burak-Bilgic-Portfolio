@@ -113,12 +113,12 @@ export default function Navbar() {
                     <MusicPlayer />
                     <button
                         onClick={toggleLanguage}
-                        className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110"
+                        className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110 uppercase text-white font-bold"
                         style={{ border: "2px solid rgba(255,255,255,0.2)", background: "rgba(0,0,0,0.2)" }}
                         aria-label="Toggle Language"
                     >
-                        <span className="text-[1.2rem] leading-none mb-0.5" style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>
-                            {language === "tr" ? "🇹🇷" : "🇺🇸"}
+                        <span className="text-[0.85rem] leading-none" style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>
+                            {language === "tr" ? "TR" : "US"}
                         </span>
                     </button>
                 </div>
