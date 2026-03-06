@@ -99,7 +99,7 @@ export default function MusicPlayer() {
     const handleMouseLeave = () => {
         timeoutRef.current = setTimeout(() => {
             setShowVolume(false);
-        }, 1500); // 1.5 saniyelik bir gecikme ekliyoruz, 3 çok uzun gelebilir.
+        }, 750); // 0.75 saniyelik bir gecikme ekleniyor.
     };
 
     useEffect(() => {
