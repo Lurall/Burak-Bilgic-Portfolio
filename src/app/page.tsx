@@ -17,27 +17,28 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const { theme } = useTheme();
 
-  // Background color transition
-  // Light mode: #6facfc (blue sky) → warm orange sunset (rgb(235, 140, 60))
-  // Dark mode: #0b1021 (deep night) → #1a2238 (slightly lighter night)
-  const lightBgR = [111, 170, 220, 235];
-  const lightBgG = [172, 145, 120, 140];
-  const lightBgB = [252, 190, 110, 60];
+  // We will no longer animate backgroundColor directly.
+  // Instead, we will keep two static backgrounds and animate their opacity.
 
-  const darkBgR = [7, 12, 18, 26];
-  const darkBgG = [10, 16, 24, 34];
-  const darkBgB = [25, 34, 46, 68];
+  // Light Mode Static Colors
+  const lightBgTop = "rgb(111, 172, 252)"; // start color
+  const lightBgBottom = "rgb(235, 140, 60)"; // target color
 
-  const targetBgR = theme === "light" ? lightBgR : darkBgR;
-  const targetBgG = theme === "light" ? lightBgG : darkBgG;
-  const targetBgB = theme === "light" ? lightBgB : darkBgB;
+  // Dark Mode Static Colors
+  const darkBgTop = "rgb(7, 10, 25)";
+  const darkBgBottom = "rgb(26, 34, 68)";
 
-  const bgR = useTransform(scrollYProgress, [0, 0.3, 0.6, 1], targetBgR);
-  const bgG = useTransform(scrollYProgress, [0, 0.3, 0.6, 1], targetBgG);
-  const bgB = useTransform(scrollYProgress, [0, 0.3, 0.6, 1], targetBgB);
+  // The content sections need semi-transparent backgrounds
+  const lightContentBgTop = "rgba(111, 172, 252, 0.85)";
+  const lightContentBgBottom = "rgba(235, 140, 60, 0.85)";
 
-  const bgColor = useMotionTemplate`rgb(${bgR}, ${bgG}, ${bgB})`;
-  const contentBgColor = useMotionTemplate`rgba(${bgR}, ${bgG}, ${bgB}, ${theme === 'light' ? 0.85 : 0.70})`;
+  const darkContentBgTop = "rgba(7, 10, 25, 0.70)";
+  const darkContentBgBottom = "rgba(26, 34, 68, 0.70)";
+
+  // We animate opacity from 0 to 1 as user scrolls down
+  const scrollOpacity = useTransform(scrollYProgress, [0, 0.6], [0, 1]);
+  // And the reverse for the top layer
+  const scrollOpacityReverse = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
     <>
@@ -47,30 +48,35 @@ export default function Home() {
       {/* Navbar */}
       <Navbar />
 
-      {/* Fixed background that changes color based on scroll */}
-      {/* Light Mode Layer */}
-      <motion.div
-        className="fixed inset-0"
-        style={{
-          backgroundColor: useMotionTemplate`rgb(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgB)})`,
-          zIndex: -2
-        }}
-        initial={{ opacity: 1 }}
-        animate={{ opacity: theme === 'light' ? 1 : 0 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-      />
+      {/* Fixed background that changes color based on scroll using GPU friendly opacity */}
 
-      {/* Dark Mode Layer */}
-      <motion.div
-        className="fixed inset-0"
-        style={{
-          backgroundColor: useMotionTemplate`rgb(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgB)})`,
-          zIndex: -1
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: theme === 'dark' ? 1 : 0 }}
-        transition={{ duration: 1, ease: "easeInOut" }}
-      />
+      {/* --- Light Mode Backgrounds --- */}
+      {theme === 'light' && (
+        <>
+          <motion.div
+            className="fixed inset-0 pointer-events-none"
+            style={{ backgroundColor: lightBgTop, zIndex: -2, opacity: scrollOpacityReverse, willChange: 'opacity' }}
+          />
+          <motion.div
+            className="fixed inset-0 pointer-events-none"
+            style={{ backgroundColor: lightBgBottom, zIndex: -2, opacity: scrollOpacity, willChange: 'opacity' }}
+          />
+        </>
+      )}
+
+      {/* --- Dark Mode Backgrounds --- */}
+      {theme === 'dark' && (
+        <>
+          <motion.div
+            className="fixed inset-0 pointer-events-none"
+            style={{ backgroundColor: darkBgTop, zIndex: -1, opacity: scrollOpacityReverse, willChange: 'opacity' }}
+          />
+          <motion.div
+            className="fixed inset-0 pointer-events-none"
+            style={{ backgroundColor: darkBgBottom, zIndex: -1, opacity: scrollOpacity, willChange: 'opacity' }}
+          />
+        </>
+      )}
 
       {/* Mountains - fixed, persistent, with blur on scroll */}
       <MountainScene />
@@ -81,27 +87,37 @@ export default function Home() {
         <Hero />
 
         {/* Content sections - semi-transparent so mountains show through blurred */}
-        {/* We use two overlapping backgrounds for the content section as well to crossfade cleanly */}
-        <div className="relative w-full">
-          <motion.div
-            className="absolute inset-0 z-[-1]"
-            style={{ backgroundColor: useMotionTemplate`rgba(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], lightBgB)}, 0.85)` }}
-            initial={{ opacity: 1 }}
-            animate={{ opacity: theme === 'light' ? 1 : 0 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute inset-0 z-[-1]"
-            style={{ backgroundColor: useMotionTemplate`rgba(${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgR)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgG)}, ${useTransform(scrollYProgress, [0, 0.3, 0.6, 1], darkBgB)}, 0.70)` }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: theme === 'dark' ? 1 : 0 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <About />
-          <Skills />
-          <Projects />
-          <Footer />
-        </div>
+        {/* We use two overlapping backgrounds for the content section as well to crossfade cleanly via opacity */}
+
+        {theme === 'light' && (
+          <>
+            <motion.div
+              className="absolute inset-0 z-[-1] pointer-events-none"
+              style={{ backgroundColor: lightContentBgTop, opacity: scrollOpacityReverse, willChange: 'opacity' }}
+            />
+            <motion.div
+              className="absolute inset-0 z-[-1] pointer-events-none"
+              style={{ backgroundColor: lightContentBgBottom, opacity: scrollOpacity, willChange: 'opacity' }}
+            />
+          </>
+        )}
+
+        {theme === 'dark' && (
+          <>
+            <motion.div
+              className="absolute inset-0 z-[-1] pointer-events-none"
+              style={{ backgroundColor: darkContentBgTop, opacity: scrollOpacityReverse, willChange: 'opacity' }}
+            />
+            <motion.div
+              className="absolute inset-0 z-[-1] pointer-events-none"
+              style={{ backgroundColor: darkContentBgBottom, opacity: scrollOpacity, willChange: 'opacity' }}
+            />
+          </>
+        )}
+        <About />
+        <Skills />
+        <Projects />
+        <Footer />
       </div>
     </>
   );
