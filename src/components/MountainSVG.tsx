@@ -64,7 +64,7 @@ export default function MountainScene() {
                                 translateX: "-50%",
                                 translateY: "-50%",
                                 color: sunColor1,
-                                filter: "drop-shadow(0 0 10px rgba(255, 215, 0, 0.8))",
+                                filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 1)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.9))",
                                 zIndex: 0,
                                 fontSize: "120px",
                                 display: "flex",
