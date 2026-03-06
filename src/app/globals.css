@@ -32,6 +32,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
   }
 
   html {
@@ -49,6 +50,7 @@
     color: var(--text);
     overflow-x: hidden;
     line-height: 1.7;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   }
 
   a {
