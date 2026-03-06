@@ -30,17 +30,19 @@ export default function MusicPlayer() {
         audio.play().then(() => {
             hasStartedRef.current = true;
         }).catch(() => {
-            // Blocked by browser - wait for ANY user interaction
-            const events = ["click", "touchstart", "scroll", "keydown", "mousemove"];
+            // Blocked by browser - wait for ANY valid user interaction
+            const events = ["click", "touchstart", "keydown", "pointerdown"];
             const startOnInteraction = () => {
                 if (!hasStartedRef.current && audioRef.current) {
                     audioRef.current.play().then(() => {
                         hasStartedRef.current = true;
-                    }).catch(() => { });
+                        events.forEach(e => document.removeEventListener(e, startOnInteraction));
+                    }).catch(() => {
+                        // Playback prevented, keep waiting for a valid interaction
+                    });
                 }
-                events.forEach(e => document.removeEventListener(e, startOnInteraction));
             };
-            events.forEach(e => document.addEventListener(e, startOnInteraction, { once: true }));
+            events.forEach(e => document.addEventListener(e, startOnInteraction));
         });
 
         return () => {
