@@ -132,15 +132,6 @@ export default function Footer() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-5">
-                                <div className="w-14 h-14 flex items-center justify-center rounded-xl text-[1.5rem]" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--accent)" }}>
-                                    📍
-                                </div>
-                                <div>
-                                    <span className="block text-[0.85rem] uppercase tracking-[1px] mb-1 font-medium" style={{ color: "var(--text-dim)" }}>{t.contact.labels.location}</span>
-                                    <span className="block text-[1rem] font-medium" style={{ color: "var(--text)" }}>{t.contact.values.location}</span>
-                                </div>
-                            </div>
 
                             <div className="flex items-center gap-5">
                                 <div className="w-14 h-14 flex items-center justify-center rounded-xl text-[1.5rem]" style={{ background: "var(--surface-glass)", border: "1px solid var(--border)", color: "var(--accent)" }}>
