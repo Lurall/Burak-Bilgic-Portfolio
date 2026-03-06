@@ -24,9 +24,9 @@ export default function Home() {
   const lightBgG = [172, 145, 120, 140];
   const lightBgB = [252, 190, 110, 60];
 
-  const darkBgR = [11, 16, 21, 26];
-  const darkBgG = [16, 22, 28, 34];
-  const darkBgB = [33, 40, 48, 56];
+  const darkBgR = [7, 12, 18, 26];
+  const darkBgG = [10, 16, 24, 34];
+  const darkBgB = [25, 34, 46, 68];
 
   const targetBgR = theme === "light" ? lightBgR : darkBgR;
   const targetBgG = theme === "light" ? lightBgG : darkBgG;

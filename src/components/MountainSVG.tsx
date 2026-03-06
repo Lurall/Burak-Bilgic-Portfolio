@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 
 import { useTheme } from "@/context/ThemeContext";
 
@@ -29,8 +29,8 @@ export default function MountainScene() {
     const mountainBlur = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.36, 1.08]);
     const mountainBlurFilter = useMotionTemplate`blur(${mountainBlur}px)`;
 
-    // Static star positions for dark mode
-    const stars = Array.from({ length: 40 }).map((_, i) => ({
+    // Static star positions for dark mode (increased count to 80)
+    const stars = Array.from({ length: 80 }).map((_, i) => ({
         id: i,
         top: `${Math.random() * 60}%`,
         left: `${Math.random() * 100}%`,
@@ -44,121 +44,139 @@ export default function MountainScene() {
             className="fixed inset-0 pointer-events-none overflow-hidden"
             style={{ zIndex: 0 }}
         >
-            {theme === "light" ? (
-                <>
-                    {/* Sun */}
+            <AnimatePresence>
+                {theme === "light" && (
                     <motion.div
-                        style={{
-                            position: "absolute",
-                            left: celestialX,
-                            top: celestialY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                            width: 120,
-                            height: 120,
-                            borderRadius: "50%",
-                            background: sunColor1,
-                            opacity: 0.9,
-                            filter: "blur(2px)",
-                            zIndex: 0,
-                        }}
-                    />
-                    {/* Sun glow */}
-                    <motion.div
-                        style={{
-                            position: "absolute",
-                            left: celestialX,
-                            top: celestialY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                            width: 250,
-                            height: 250,
-                            borderRadius: "50%",
-                            background: sunColor2,
-                            opacity: 0.2,
-                            filter: "blur(40px)",
-                            zIndex: 0,
-                        }}
-                    />
-                    {/* Extra glow */}
-                    <motion.div
-                        style={{
-                            position: "absolute",
-                            left: celestialX,
-                            top: celestialY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                            width: 400,
-                            height: 400,
-                            borderRadius: "50%",
-                            background: sunColor2,
-                            opacity: 0.08,
-                            filter: "blur(60px)",
-                            zIndex: 0,
-                        }}
-                    />
-                </>
-            ) : (
-                <>
-                    {/* Stars */}
-                    {stars.map((star) => (
+                        key="sun"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                        className="absolute inset-0 z-0"
+                    >
+                        {/* Sun */}
                         <motion.div
-                            key={star.id}
                             style={{
                                 position: "absolute",
-                                top: star.top,
-                                left: star.left,
-                                width: star.size,
-                                height: star.size,
+                                left: celestialX,
+                                top: celestialY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                                width: 120,
+                                height: 120,
                                 borderRadius: "50%",
-                                backgroundColor: "white",
-                                opacity: star.opacity,
-                                boxShadow: "0 0 5px rgba(255,255,255,0.8)",
+                                background: sunColor1,
+                                opacity: 0.9,
+                                filter: "blur(2px)",
+                                zIndex: 0,
                             }}
-                            animate={{ opacity: [star.opacity, star.opacity * 0.2, star.opacity] }}
-                            transition={{ duration: parseFloat(star.animationDuration), repeat: Infinity, ease: "easeInOut" }}
                         />
-                    ))}
+                        {/* Sun glow */}
+                        <motion.div
+                            style={{
+                                position: "absolute",
+                                left: celestialX,
+                                top: celestialY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                                width: 250,
+                                height: 250,
+                                borderRadius: "50%",
+                                background: sunColor2,
+                                opacity: 0.2,
+                                filter: "blur(40px)",
+                                zIndex: 0,
+                            }}
+                        />
+                        {/* Extra glow */}
+                        <motion.div
+                            style={{
+                                position: "absolute",
+                                left: celestialX,
+                                top: celestialY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                                width: 400,
+                                height: 400,
+                                borderRadius: "50%",
+                                background: sunColor2,
+                                opacity: 0.08,
+                                filter: "blur(60px)",
+                                zIndex: 0,
+                            }}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-                    {/* Crescent Moon (Right-facing) */}
+            <AnimatePresence>
+                {theme === "dark" && (
                     <motion.div
-                        style={{
-                            position: "absolute",
-                            left: celestialX,
-                            top: celestialY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                            width: 120,
-                            height: 120,
-                            borderRadius: "50%",
-                            // Box shadow to create crescent facing right
-                            // Main shape is transparent, we use an inset shadow or normal shadow.
-                            // The easiest crescent in CSS is a transparent circle with a solid box-shadow
-                            background: "transparent",
-                            boxShadow: "inset -25px 0px 0px 5px rgba(255, 255, 255, 0.9)",
-                            filter: "blur(1px) drop-shadow(0 0 15px rgba(255,255,255,0.4))",
-                            zIndex: 0,
-                            transform: "rotate(-15deg)"
-                        }}
-                    />
-                    {/* Moon glow */}
-                    <motion.div
-                        style={{
-                            position: "absolute",
-                            left: celestialX,
-                            top: celestialY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                            width: 180,
-                            height: 180,
-                            borderRadius: "50%",
-                            background: "rgba(255, 255, 255, 0.15)",
-                            filter: "blur(30px)",
-                            zIndex: 0,
-                        }}
-                    />
-                </>
-            )}
+                        key="moon-stars"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                        className="absolute inset-0 z-0"
+                    >
+                        {/* Stars */}
+                        {stars.map((star) => (
+                            <motion.div
+                                key={star.id}
+                                style={{
+                                    position: "absolute",
+                                    top: star.top,
+                                    left: star.left,
+                                    width: star.size,
+                                    height: star.size,
+                                    borderRadius: "50%",
+                                    backgroundColor: "white",
+                                    opacity: star.opacity,
+                                    boxShadow: "0 0 5px rgba(255,255,255,0.8)",
+                                }}
+                                animate={{ opacity: [star.opacity, star.opacity * 0.2, star.opacity] }}
+                                transition={{ duration: parseFloat(star.animationDuration), repeat: Infinity, ease: "easeInOut" }}
+                            />
+                        ))}
+
+                        {/* Crescent Moon (Left-facing / Missing part left -> 180 deg flip) */}
+                        <motion.div
+                            style={{
+                                position: "absolute",
+                                left: celestialX,
+                                top: celestialY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                                width: 120,
+                                height: 120,
+                                borderRadius: "50%",
+                                background: "transparent",
+                                // Changing inset shadow to project from the opposite side to flip it 180 degrees
+                                boxShadow: "inset 25px 0px 0px 5px rgba(255, 255, 255, 0.9)",
+                                filter: "blur(1px) drop-shadow(0 0 15px rgba(255,255,255,0.4))",
+                                zIndex: 0,
+                                transform: "rotate(15deg)"
+                            }}
+                        />
+                        {/* Moon glow */}
+                        <motion.div
+                            style={{
+                                position: "absolute",
+                                left: celestialX,
+                                top: celestialY,
+                                translateX: "-50%",
+                                translateY: "-50%",
+                                width: 180,
+                                height: 180,
+                                borderRadius: "50%",
+                                background: "rgba(255, 255, 255, 0.15)",
+                                filter: "blur(30px)",
+                                zIndex: 0,
+                            }}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Mountains SVG - stays visible with slight blur on scroll */}
             <motion.div
