@@ -52,24 +52,20 @@ export default function Home() {
       {/* Fixed background that changes color based on scroll using GPU friendly opacity */}
 
       {/* --- Light Mode Backgrounds --- */}
-      {theme === 'light' && (
-        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -2 }}>
-          <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
-          <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
-          <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
-          <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-        </div>
-      )}
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-100' : 'opacity-0'}`} style={{ zIndex: -2 }}>
+        <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
+      </div>
 
       {/* --- Dark Mode Backgrounds --- */}
-      {theme === 'dark' && (
-        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -1 }}>
-          <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
-          <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
-          <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
-          <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
-        </div>
-      )}
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`} style={{ zIndex: -1 }}>
+        <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+      </div>
 
       {/* Mountains - fixed, persistent, with blur on scroll */}
       <MountainScene />
@@ -82,23 +78,19 @@ export default function Home() {
         {/* Content sections wrapper with its own relative scope so backgrounds map correctly */}
         <div className="relative w-full">
           {/* Content sections - semi-transparent background with layered opacity */}
-          {theme === 'light' && (
-            <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.85 }}>
-              <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
-              <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
-              <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
-              <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-            </div>
-          )}
+          <div className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-[0.85]' : 'opacity-0'}`}>
+            <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
+          </div>
 
-          {theme === 'dark' && (
-            <div className="absolute inset-0 z-[-1] pointer-events-none" style={{ opacity: 0.70 }}>
-              <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
-              <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
-              <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
-              <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
-            </div>
-          )}
+          <div className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-[0.70]' : 'opacity-0'}`}>
+            <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+          </div>
 
           <About />
           <Skills />

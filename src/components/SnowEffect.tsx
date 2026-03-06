@@ -47,7 +47,7 @@ export default function SnowEffect() {
         window.addEventListener("mouseout", handleMouseLeave);
 
         let isMobile = window.innerWidth < 768;
-        let targetFalling = isMobile ? 15 : 120; // Reduced amount drastically for mobile
+        let targetFalling = isMobile ? 35 : 120; // Adjusted for better mobile feel
 
         const resize = () => {
             canvas.width = window.innerWidth;
@@ -55,7 +55,7 @@ export default function SnowEffect() {
             groundHeights = new Array(Math.ceil(canvas.width / BIN_WIDTH)).fill(0);
 
             isMobile = window.innerWidth < 768;
-            targetFalling = isMobile ? 15 : 120;
+            targetFalling = isMobile ? 35 : 120;
 
             // Clean up settled snowflakes on resize so they don't float in mid-air
             for (let i = snowflakes.length - 1; i >= 0; i--) {
@@ -69,7 +69,7 @@ export default function SnowEffect() {
         resize();
         window.addEventListener("resize", resize);
 
-        const initialSpawn = isMobile ? 15 : 120; // Reduced amount drastically for mobile
+        const initialSpawn = isMobile ? 35 : 120; // Adjusted for better mobile feel
 
         // Initial spawn
         for (let i = 0; i < initialSpawn; i++) {
@@ -77,7 +77,7 @@ export default function SnowEffect() {
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 2.5 + 0.8,
-                speed: (Math.random() * 0.10 + 0.04) * (isMobile ? 0.8 : 1), // Lo-fi tempo but slightly faster falling
+                speed: (Math.random() * 0.10 + 0.04), // Consistent speed across devices
                 opacity: Math.random() * 0.5 + 0.2,
                 swing: Math.random() * Math.PI * 2,
                 swingSpeed: Math.random() * 0.002 + 0.0005,
@@ -169,7 +169,7 @@ export default function SnowEffect() {
                                 x: i * BIN_WIDTH,
                                 y: canvas.height - groundHeights[i],
                                 radius: Math.random() * 2 + 1,
-                                speed: (Math.random() * 0.10 + 0.04) * (isMobile ? 0.8 : 1), // slightly faster
+                                speed: (Math.random() * 0.10 + 0.04), // Consistent speed
                                 opacity: Math.random() * 0.5 + 0.2,
                                 swing: 0,
                                 swingSpeed: 0,
@@ -202,7 +202,7 @@ export default function SnowEffect() {
                         x: Math.random() * canvas.width,
                         y: -10,
                         radius: Math.random() * 2.5 + 0.8,
-                        speed: (Math.random() * 0.12 + 0.05) * (isMobile ? 0.8 : 1), // slightly faster
+                        speed: (Math.random() * 0.12 + 0.05), // Consistent speed
                         opacity: Math.random() * 0.5 + 0.2,
                         swing: Math.random() * Math.PI * 2,
                         swingSpeed: Math.random() * 0.002 + 0.0005,
