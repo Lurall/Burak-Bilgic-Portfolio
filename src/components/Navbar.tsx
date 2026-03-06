@@ -54,24 +54,30 @@ export default function Navbar() {
                     <ellipse cx="100" cy="52" rx="120" ry="28" fill="rgba(255,255,255,0.28)" />
                     <ellipse cx="170" cy="45" rx="65" ry="22" fill="rgba(255,255,255,0.22)" />
                     <ellipse cx="55" cy="58" rx="45" ry="18" fill="rgba(255,255,255,0.18)" />
+                    <ellipse cx="230" cy="62" rx="75" ry="20" fill="rgba(255,255,255,0.20)" />
 
                     <ellipse cx="400" cy="50" rx="80" ry="35" fill="rgba(255,255,255,0.3)" />
                     <ellipse cx="460" cy="55" rx="100" ry="25" fill="rgba(255,255,255,0.22)" />
                     <ellipse cx="350" cy="60" rx="55" ry="20" fill="rgba(255,255,255,0.16)" />
                     <ellipse cx="430" cy="42" rx="40" ry="18" fill="rgba(255,255,255,0.2)" />
+                    <ellipse cx="540" cy="58" rx="85" ry="28" fill="rgba(255,255,255,0.25)" />
 
                     <ellipse cx="730" cy="55" rx="140" ry="30" fill="rgba(255,255,255,0.26)" />
                     <ellipse cx="810" cy="45" rx="70" ry="28" fill="rgba(255,255,255,0.24)" />
                     <ellipse cx="680" cy="48" rx="85" ry="22" fill="rgba(255,255,255,0.2)" />
+                    <ellipse cx="600" cy="52" rx="65" ry="20" fill="rgba(255,255,255,0.18)" />
+                    <ellipse cx="880" cy="60" rx="90" ry="25" fill="rgba(255,255,255,0.22)" />
 
                     <ellipse cx="1030" cy="58" rx="95" ry="24" fill="rgba(255,255,255,0.25)" />
                     <ellipse cx="1110" cy="50" rx="60" ry="30" fill="rgba(255,255,255,0.2)" />
                     <ellipse cx="1070" cy="42" rx="45" ry="16" fill="rgba(255,255,255,0.18)" />
+                    <ellipse cx="960" cy="55" rx="75" ry="22" fill="rgba(255,255,255,0.21)" />
 
                     <ellipse cx="1300" cy="52" rx="135" ry="26" fill="rgba(255,255,255,0.28)" />
                     <ellipse cx="1390" cy="46" rx="55" ry="24" fill="rgba(255,255,255,0.22)" />
                     <ellipse cx="1250" cy="58" rx="70" ry="20" fill="rgba(255,255,255,0.16)" />
                     <ellipse cx="1350" cy="38" rx="35" ry="14" fill="rgba(255,255,255,0.15)" />
+                    <ellipse cx="1420" cy="62" rx="80" ry="25" fill="rgba(255,255,255,0.24)" />
                 </svg>
             </div>
 
