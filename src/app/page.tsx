@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
@@ -16,9 +16,16 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const { theme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
 
-  // We use 4 stacked layers and crossfade their opacity 
-  // to replicate the RGB interpolation perfectly on the GPU.
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Light Mode Colors (Blue -> Purple -> Pink -> Orange)
   const lightColors = [
@@ -41,55 +48,100 @@ export default function Home() {
   const opacity3 = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
   const opacity4 = useTransform(scrollYProgress, [0.6, 1], [0, 1]);
 
+  // Mobile fallback styles to avoid heavy recalculations on scroll
+  const getMobileBg = (themeType: 'light' | 'dark') => {
+    if (themeType === 'light') {
+      return `linear-gradient(to bottom, ${lightColors[0]}, ${lightColors[1]})`;
+    }
+    return `linear-gradient(to bottom, ${darkColors[0]}, ${darkColors[1]})`;
+  };
+
   return (
     <>
-      {/* Snow on top of everything */}
       <SnowEffect />
-
-      {/* Navbar */}
       <Navbar />
 
-      {/* Fixed background that changes color based on scroll using GPU friendly opacity */}
-
       {/* --- Light Mode Backgrounds --- */}
-      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-100' : 'opacity-0'}`} style={{ zIndex: -2 }}>
-        <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-      </div>
-
-      {/* --- Dark Mode Backgrounds --- */}
-      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`} style={{ zIndex: -1 }}>
-        <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
-      </div>
-
-      {/* Mountains - fixed, persistent, with blur on scroll */}
-      <MountainScene />
-
-      {/* Main content */}
-      <div ref={containerRef} className="relative w-full" style={{ zIndex: 2 }}>
-        {/* Hero section - fully transparent to show mountains */}
-        <Hero />
-
-        {/* Content sections wrapper with its own relative scope so backgrounds map correctly */}
-        <div className="relative w-full">
-          {/* Content sections - semi-transparent background with layered opacity */}
-          <div className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-[0.85]' : 'opacity-0'}`}>
+      <div
+        className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-100' : 'opacity-0'}`}
+        style={{
+          zIndex: -2,
+          background: isMobile ? getMobileBg('light') : 'transparent',
+          // Force hardware acceleration
+          transform: 'translateZ(0)',
+          willChange: isMobile ? 'auto' : 'opacity'
+        }}
+      >
+        {!isMobile && (
+          <>
             <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
             <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
             <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
             <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-          </div>
+          </>
+        )}
+      </div>
 
-          <div className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-[0.70]' : 'opacity-0'}`}>
+      {/* --- Dark Mode Backgrounds --- */}
+      <div
+        className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`}
+        style={{
+          zIndex: -1,
+          background: isMobile ? getMobileBg('dark') : 'transparent',
+          // Force hardware acceleration
+          transform: 'translateZ(0)',
+          willChange: isMobile ? 'auto' : 'opacity'
+        }}
+      >
+        {!isMobile && (
+          <>
             <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
             <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
             <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
             <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+          </>
+        )}
+      </div>
+
+      <MountainScene />
+
+      <div ref={containerRef} className="relative w-full" style={{ zIndex: 2 }}>
+        <Hero />
+
+        <div className="relative w-full">
+          {/* Content sections backgrounds */}
+          <div
+            className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-[0.85]' : 'opacity-0'}`}
+            style={{
+              background: isMobile ? getMobileBg('light') : 'transparent',
+              transform: 'translateZ(0)'
+            }}
+          >
+            {!isMobile && (
+              <>
+                <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+                <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+                <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+                <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
+              </>
+            )}
+          </div>
+
+          <div
+            className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-[0.70]' : 'opacity-0'}`}
+            style={{
+              background: isMobile ? getMobileBg('dark') : 'transparent',
+              transform: 'translateZ(0)'
+            }}
+          >
+            {!isMobile && (
+              <>
+                <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+                <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+                <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+                <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
+              </>
+            )}
           </div>
 
           <About />

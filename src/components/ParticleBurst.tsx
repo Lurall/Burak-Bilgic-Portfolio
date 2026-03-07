@@ -24,6 +24,12 @@ export default function ParticleBurst({
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleHover = useCallback(() => {
+        // Only trigger on devices with a fine pointer (mouse/trackpad), not touchscreens.
+        // This prevents the "double-tap-to-click" issue on mobile Safari/Chrome caused by :hover or onMouseEnter.
+        if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+            return;
+        }
+
         const newParticles: Particle[] = [];
         const count = 10;
         for (let i = 0; i < count; i++) {

@@ -22,7 +22,10 @@ export default function Navbar() {
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener("scroll", onScroll);
+
+        // Use passive: true to tell the browser we won't call preventDefault()
+        // This makes scrolling on mobile significantly smoother
+        window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
