@@ -13,7 +13,7 @@ import emailjs from "@emailjs/browser";
 import { useLanguage } from "@/context/LanguageContext";
 
 const socials = [
-    { icon: FaLinkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/burak-bilgiç-414b362b2/" },
+    { icon: FaLinkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/lurallburak" },
     { icon: FaGithub, label: "GitHub", href: "https://github.com/Lurall" },
     { icon: FaYoutube, label: "YouTube", href: "https://youtube.com/@luralls" },
     { icon: FaXTwitter, label: "X", href: "" },

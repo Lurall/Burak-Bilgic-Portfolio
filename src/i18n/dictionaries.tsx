@@ -96,7 +96,7 @@ export const dictionaries = {
             viewProjects: "View Projects",
             contactMe: "Contact Me",
             downloadCv: "Download CV",
-            cvLink: "/cv/Burak_Bilgic_CV_EN.pdf",
+            cvLink: "/cv/Burak Bilgiç - İngilizce Özgeçmiş CV.pdf",
             scrollDown: "Scroll Down",
         },
         about: {
