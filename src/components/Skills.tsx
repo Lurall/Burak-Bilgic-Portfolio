@@ -91,7 +91,7 @@ export default function Skills() {
                                             {cat.skills.map((skill) => (
                                                 <motion.span
                                                     key={skill}
-                                                    className="px-[18px] py-2 rounded-full text-[0.85rem] cursor-default"
+                                                    className="px-3.5 py-2 rounded-full text-[0.85rem] cursor-default"
                                                     style={{
                                                         background: "rgba(255, 215, 0, 0.06)",
                                                         border: "1px solid var(--border)",

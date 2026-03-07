@@ -66,20 +66,15 @@ export default function Home() {
         className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-100' : 'opacity-0'}`}
         style={{
           zIndex: -2,
-          background: isMobile ? getMobileBg('light') : 'transparent',
           // Force hardware acceleration
           transform: 'translateZ(0)',
-          willChange: isMobile ? 'auto' : 'opacity'
+          willChange: 'opacity'
         }}
       >
-        {!isMobile && (
-          <>
-            <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-          </>
-        )}
+        <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
       </div>
 
       {/* --- Dark Mode Backgrounds --- */}
@@ -87,20 +82,15 @@ export default function Home() {
         className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`}
         style={{
           zIndex: -1,
-          background: isMobile ? getMobileBg('dark') : 'transparent',
           // Force hardware acceleration
           transform: 'translateZ(0)',
-          willChange: isMobile ? 'auto' : 'opacity'
+          willChange: 'opacity'
         }}
       >
-        {!isMobile && (
-          <>
-            <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
-            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
-          </>
-        )}
+        <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+        <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
       </div>
 
       <MountainScene />
@@ -113,35 +103,25 @@ export default function Home() {
           <div
             className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'light' ? 'opacity-[0.85]' : 'opacity-0'}`}
             style={{
-              background: isMobile ? getMobileBg('light') : 'transparent',
               transform: 'translateZ(0)'
             }}
           >
-            {!isMobile && (
-              <>
-                <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
-                <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
-                <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
-                <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
-              </>
-            )}
+            <div className="absolute inset-0" style={{ backgroundColor: lightColors[0] }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[1], opacity: opacity2, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[2], opacity: opacity3, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: lightColors[3], opacity: opacity4, willChange: 'opacity' }} />
           </div>
 
           <div
             className={`absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-700 ease-in-out ${theme === 'dark' ? 'opacity-[0.70]' : 'opacity-0'}`}
             style={{
-              background: isMobile ? getMobileBg('dark') : 'transparent',
               transform: 'translateZ(0)'
             }}
           >
-            {!isMobile && (
-              <>
-                <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
-                <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
-                <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
-                <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
-              </>
-            )}
+            <div className="absolute inset-0" style={{ backgroundColor: darkColors[0] }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[1], opacity: opacity2, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[2], opacity: opacity3, willChange: 'opacity' }} />
+            <motion.div className="absolute inset-0" style={{ backgroundColor: darkColors[3], opacity: opacity4, willChange: 'opacity' }} />
           </div>
 
           <About />
