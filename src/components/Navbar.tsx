@@ -6,6 +6,7 @@ import { FaTimes, FaSun, FaMoon } from "react-icons/fa";
 import MusicPlayer from "./MusicPlayer";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -122,14 +123,7 @@ export default function Navbar() {
                 {/* Volume, Theme & Language Switcher (far right, absolute) */}
                 <div className="flex items-center gap-4 absolute right-6 top-1/2 -translate-y-1/2">
                     <MusicPlayer />
-                    <button
-                        onClick={toggleTheme}
-                        className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110"
-                        style={{ border: "2px solid rgba(255,255,255,0.2)", background: "rgba(0,0,0,0.2)", color: "white" }}
-                        aria-label="Toggle Theme"
-                    >
-                        {theme === "dark" ? <FaMoon size={14} /> : <FaSun size={14} />}
-                    </button>
+                    <ThemeToggle />
                     <button
                         onClick={toggleLanguage}
                         className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer overflow-hidden transition-transform hover:scale-110 uppercase text-white font-bold"
